@@ -55,4 +55,6 @@ extension:yaml mongolab.com # mongolab credentials in yaml configs (try with yml
 jsforce extension:js conn.login # possible salesforce credentials in nodejs projects
 
 SF_USERNAME "salesforce"  # possible salesforce credentials
+
+filename:.tugboat NOT "_tugboat"  # Digital Ocean tugboat config
 ```
