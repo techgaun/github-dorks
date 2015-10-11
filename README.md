@@ -42,6 +42,8 @@ filename:.bashrc password # search for passwords, etc. in .bashrc (try with .bas
 
 filename:.bashrc mailchimp  # variation of above (try more variations)
 
+filename:.bash_profile aws  # aws access and secret keys
+
 rds.amazonaws.com password  # Amazon RDS possible credentials
 
 extension:json api.forecast.io  # try variations, find api keys/secrets
