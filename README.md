@@ -1,5 +1,5 @@
 # Github Dorks
-Collection of github dorks that can reveal sensitive personal and/or organizational information such as private keys, credentials, authentication tokens, etc. This list is supposed to be useful for assessing security and performing pen-testing of systems.
+[Github search](https://github.com/search) is quite powerful and useful feature and can be used to search sensitive data on the repositories. Collection of github dorks that can reveal sensitive personal and/or organizational information such as private keys, credentials, authentication tokens, etc. This list is supposed to be useful for assessing security and performing pen-testing of systems.
 
 ### Contribution
 Please consider contributing the dorks that can reveal potentially senstive information in github.
