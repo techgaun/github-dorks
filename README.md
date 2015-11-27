@@ -57,4 +57,16 @@ jsforce extension:js conn.login # possible salesforce credentials in nodejs proj
 SF_USERNAME "salesforce"  # possible salesforce credentials
 
 filename:.tugboat NOT "_tugboat"  # Digital Ocean tugboat config
+
+HEROKU_API_KEY language:shell # Heroku api keys
+
+HEROKU_API_KEY language:json  # Heroku api keys in json files
+
+filename:.netrc password  # netrc that possibly holds sensitive credentials
+
+filename:_netrc password  # netrc that possibly holds sensitive credentials
+
+filename:hub oauth_token  # hub config that stores github tokens
+
+filename:robomongo.json   # mongodb credentials file used by robomongo
 ```
