@@ -69,4 +69,18 @@ filename:_netrc password  # netrc that possibly holds sensitive credentials
 filename:hub oauth_token  # hub config that stores github tokens
 
 filename:robomongo.json   # mongodb credentials file used by robomongo
+
+filename:filezilla.xml Pass   # filezilla config file with possible user/pass to ftp
+
+filename:recentservers.xml Pass   # filezilla config file with possible user/pass to ftp
+
+filename:config.json auths  # docker registry authentication data
+
+filename:idea14.key   # IntelliJ Idea 14 key, try variations for other versions
+
+filename:config irc_pass  # possible IRC config
+
+filename:connections.xml  # possible db connections configuration, try variations to be specific
+
+filename:express.conf path:.openshift # openshift config, only email and server though
 ```
