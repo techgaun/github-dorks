@@ -5,7 +5,7 @@
 [github-dork.py](github-dork.py) is a simple python tool that can search through your repository or your organization/user repositories. Its not a perfect tool at the moment but provides a basic functionality to automate the search on your repositories against the dorks specified in text file.
 
 #### Installation
-This tool uses [pygithub3.py](https://github.com/sigmavirus24/github3.py) to talk with GitHub Search API.
+This tool uses [github3.py](https://github.com/sigmavirus24/github3.py) to talk with GitHub Search API.
 
 Clone this repository and run:
 ```shell
