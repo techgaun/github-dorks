@@ -1,6 +1,45 @@
 # Github Dorks
 [Github search](https://github.com/search) is quite powerful and useful feature and can be used to search sensitive data on the repositories. Collection of github dorks that can reveal sensitive personal and/or organizational information such as private keys, credentials, authentication tokens, etc. This list is supposed to be useful for assessing security and performing pen-testing of systems.
 
+### GitHub Dork Search Tool
+[github-dork.py](github-dork.py) is a simple python tool that can search through your repository or your organization/user repositories. Its not a perfect tool at the moment but provides a basic functionality to automate the search on your repositories against the dorks specified in text file.
+
+#### Installation
+This tool uses [pygithub3.py](https://github.com/sigmavirus24/github3.py) to talk with GitHub Search API.
+
+Clone this repository and run:
+```shell
+pip install -r requirements.txt
+```
+
+#### Usage
+
+```
+GH_USER - Environment variable to specify github user
+GH_PWD - Environment variable to specify password
+GH_TOKEN - Environment variable to specify github token
+```
+
+Some example usages are listed below:
+
+```shell
+python github-dork.py -r techgaun/github-dorks      # search single repo
+
+python github-dork.py -u techgaun       # search all repos of user
+
+python github-dork.py -u  dev-nepal     # search all repos of an organization
+
+GH_USER=techgaun GH_PWD=<mypass> python github-dork.py -u dev-nepal     # search as authenticated user
+
+GH_TOKEN=<github_token> python github-dork.py -u dev-nepal      # search using auth token
+```
+
+#### Limitations
+
+- Authenticated requests get a higher rate limit. But, you can still hit limit with user/org with too many repos or even with large repos or large number of dorks. This is a major limitation, imo, at the moment for this tool.
+- Output formatting is not great. PR welcome
+- Handle rate limit and retry. PR welcome
+
 ### Contribution
 Please consider contributing the dorks that can reveal potentially senstive information in github.
 
