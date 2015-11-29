@@ -36,3 +36,4 @@ filename:idea14.key
 filename:config irc_pass
 filename:connections.xml
 filename:express.conf path:.openshift
+filename:.pgpass
