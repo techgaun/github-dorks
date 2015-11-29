@@ -11,16 +11,22 @@ from time import sleep
 gh_user = os.getenv('GH_USER', None)
 gh_pass = os.getenv('GH_PWD', None)
 gh_token = os.getenv('GH_TOKEN', None)
-gh_dorks_file = "github-dorks.txt"
 
 gh = github.GitHub(username=gh_user, password=gh_pass, token=gh_token)
 
 
-def search(repo_to_search=None, user_to_search=None):
+def search(repo_to_search=None, user_to_search=None, gh_dorks_file=None):
+    if gh_dorks_file is None:
+        gh_dorks_file = 'github-dorks.txt'
+    if not os.path.isfile(gh_dorks_file):
+        raise Exception('Error, the dorks file path is not valid')
+
     found = False
     with open(gh_dorks_file, 'r') as dork_file:
         for dork in dork_file:
             dork = dork.strip()
+            if not dork or dork[0] in '#;':
+                continue
             addendum = ''
             if repo_to_search is not None:
                 addendum = ' repo:' + repo_to_search
@@ -88,10 +94,19 @@ def main():
         help='Github repo to search within. Eg: techgaun/github-dorks'
     )
 
+    parser.add_argument(
+        '-d',
+        '--dork',
+        dest='gh_dorks_file',
+        action='store',
+        help='Github dorks file. Eg: github-dorks.txt'
+    )
+
     args = parser.parse_args()
     search(
         repo_to_search=args.repo_to_search,
-        user_to_search=args.user_to_search
+        user_to_search=args.user_to_search,
+        gh_dorks_file=args.gh_dorks_file
     )
 
 if __name__ == '__main__':
