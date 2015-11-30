@@ -5,7 +5,6 @@
 import github3 as github
 import os
 import argparse
-from time import sleep
 
 
 gh_user = os.getenv('GH_USER', None)
@@ -45,14 +44,15 @@ def search(repo_to_search=None, user_to_search=None, gh_dorks_file=None):
                         'score': search_result.score,
                         'url': search_result.html_url
                     }
-                    print('''
-                        Found result for {dork}
-                        Text matches: {text_matches}
-                        File path: {path}
-                        Score/Relevance: {score}
-                        URL of File: {url}
-                    '''.format(**fmt_args)
-                    )
+                    result = '\n'.join([
+                        'Found result for {dork}',
+                        'Text matches: {text_matches}',
+                        'File path: {path}',
+                        'Score/Relevance: {score}',
+                        'URL of File: {url}',
+                        ''
+                    ]).format(**fmt_args)
+                    print(result)
             except github.exceptions.ForbiddenError as e:
                 print(e)
                 return
@@ -74,14 +74,14 @@ def main():
         description='Search github for github dorks',
         epilog='Use responsibly, Enjoy pentesting'
     )
-    
+
     parser.add_argument(
         '-v',
         '--version',
         action='version',
         version='%(prog)s 0.1.0'
     )
-    
+
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument(
         '-u',
@@ -90,7 +90,7 @@ def main():
         action='store',
         help='Github user/org to search within. Eg: techgaun'
     )
-    
+
     group.add_argument(
         '-r',
         '--repo',
