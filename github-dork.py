@@ -45,21 +45,23 @@ def search(repo_to_search=None, user_to_search=None, gh_dorks_file=None):
                         'score': search_result.score,
                         'url': search_result.html_url
                     }
-                    print(
-                        '''Found result for {dork}
-Text matches: {text_matches}
-File path: {path}
-Score/Relevance: {score}
-URL of File: {url}
+                    print('''
+                        Found result for {dork}
+                        Text matches: {text_matches}
+                        File path: {path}
+                        Score/Relevance: {score}
+                        URL of File: {url}
                     '''.format(**fmt_args)
                     )
             except github.exceptions.ForbiddenError as e:
                 print(e)
+                return
                 # need to retry in case of API rate limit reached
-                # note done yet
+                # not done yet
             except github.exceptions.GitHubError as e:
                 print('GitHubError encountered on search of dork: ' + dork)
                 print(e)
+                return
             except Exception as e:
                 print('Error encountered on search of dork: ' + dork)
 
@@ -72,12 +74,14 @@ def main():
         description='Search github for github dorks',
         epilog='Use responsibly, Enjoy pentesting'
     )
+    
     parser.add_argument(
         '-v',
         '--version',
         action='version',
         version='%(prog)s 0.1.0'
     )
+    
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument(
         '-u',
@@ -86,6 +90,7 @@ def main():
         action='store',
         help='Github user/org to search within. Eg: techgaun'
     )
+    
     group.add_argument(
         '-r',
         '--repo',
