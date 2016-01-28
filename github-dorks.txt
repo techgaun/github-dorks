@@ -37,3 +37,7 @@ filename:config irc_pass
 filename:connections.xml
 filename:express.conf path:.openshift
 filename:.pgpass
+filename:proftpdpasswd
+filename:ventrilo_srv.ini
+[WFClient] Password= extension:ica
+filename:server.cfg rcon password

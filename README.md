@@ -86,3 +86,7 @@ filename:config irc_pass                        | possible IRC config
 filename:connections.xml                        | possible db connections configuration, try variations to be specific
 filename:express.conf path:.openshift           | openshift config, only email and server thou
 filename:.pgpass                                | PostgreSQL file which can contain passwords
+filename:proftpdpasswd                          | Usernames and passwords of proftpd created by cpanel
+filename:ventrilo_srv.ini                       | Ventrilo configuration
+[WFClient] Password= extension:ica              | WinFrame-Client infos needed by users to connect toCitrix Application Servers
+filename:server.cfg rcon password               | Counter Strike RCON Passwords
