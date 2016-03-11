@@ -90,3 +90,4 @@ filename:proftpdpasswd                          | Usernames and passwords of pro
 filename:ventrilo_srv.ini                       | Ventrilo configuration
 [WFClient] Password= extension:ica              | WinFrame-Client infos needed by users to connect toCitrix Application Servers
 filename:server.cfg rcon password               | Counter Strike RCON Passwords
+JEKYLL_GITHUB_TOKEN                             | Github tokens used for jekyll
