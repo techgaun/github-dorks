@@ -41,3 +41,4 @@ filename:proftpdpasswd
 filename:ventrilo_srv.ini
 [WFClient] Password= extension:ica
 filename:server.cfg rcon password
+JEKYLL_GITHUB_TOKEN
