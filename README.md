@@ -91,3 +91,9 @@ filename:ventrilo_srv.ini                       | Ventrilo configuration
 [WFClient] Password= extension:ica              | WinFrame-Client infos needed by users to connect toCitrix Application Servers
 filename:server.cfg rcon password               | Counter Strike RCON Passwords
 JEKYLL_GITHUB_TOKEN                             | Github tokens used for jekyll
+filename:.bash_history                          | Bash history file
+filename:.cshrc                                 | RC file for csh shell
+filename:.history                               | history file (often used by many tools)
+filename:.sh_history                            | korn shell history
+filename:sshd_config                            | OpenSSH server config
+filename:dhcpd.conf                             | DHCP service config

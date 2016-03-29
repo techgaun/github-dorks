@@ -42,3 +42,9 @@ filename:ventrilo_srv.ini
 [WFClient] Password= extension:ica
 filename:server.cfg rcon password
 JEKYLL_GITHUB_TOKEN
+filename:.bash_history
+filename:.cshrc
+filename:.history
+filename:.sh_history
+filename:sshd_config
+filename:dhcpd.conf
