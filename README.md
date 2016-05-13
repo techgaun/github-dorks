@@ -97,3 +97,5 @@ filename:.history                               | history file (often used by ma
 filename:.sh_history                            | korn shell history
 filename:sshd_config                            | OpenSSH server config
 filename:dhcpd.conf                             | DHCP service config
+filename:prod.exs NOT "prod.secret.exs"         | Phoenix prod configuration file
+filename:prod.secret.exs                        | Phoenix prod secret

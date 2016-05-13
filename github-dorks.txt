@@ -48,3 +48,5 @@ filename:.history
 filename:.sh_history
 filename:sshd_config
 filename:dhcpd.conf
+filename:prod.exs NOT "prod.secret.exs"
+filename:prod.secret.exs
