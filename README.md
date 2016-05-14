@@ -35,12 +35,12 @@ GH_TOKEN=<github_token> python github-dork.py -u dev-nepal              # search
 
 #### Limitations
 
-- Authenticated requests get a higher rate limit. But, you can still hit limit with user/org with too many repos or even with large repos or large number of dorks. This is a major limitation, imo, at the moment for this tool.
+- Authenticated requests get a higher rate limit. But, since this tool waits for the api rate limit to be reset (which is usually less than a minute), it can be slightly slow.
 - Output formatting is not great. PR welcome
-- Handle rate limit and retry. PR welcome
+- ~~Handle rate limit and retry. PR welcome~~
 
 ### Contribution
-Please consider contributing the dorks that can reveal potentially senstive information in github.
+Please consider contributing the dorks that can reveal potentially sensitive information in github.
 
 ### List of Dorks
 I am not categorizing at the moment. Instead I am going to just the list of dorks with a description. Many of the dorks can be modified to make the search more specific or generic. You can see more options [here](https://github.com/search#search_cheatsheet_pane).

@@ -5,6 +5,9 @@
 import github3 as github
 import os
 import argparse
+import time
+from copy import copy
+from sys import stderr
 
 
 gh_user = os.getenv('GH_USER', None)
@@ -13,6 +16,24 @@ gh_token = os.getenv('GH_TOKEN', None)
 
 gh = github.GitHub(username=gh_user, password=gh_pass, token=gh_token)
 
+def search_wrapper(gen):
+    while True:
+        gen_back = copy(gen)
+        try:
+            yield next(gen)
+        except StopIteration:
+            raise
+        except github.exceptions.ForbiddenError as e:
+            search_rate_limit = gh.rate_limit()['resources']['search']
+            limit_remaining = search_rate_limit['remaining']
+            reset_time = search_rate_limit['reset']
+            current_time = int(time.time())
+            sleep_time = reset_time - current_time + 1
+            stderr.write('GitHub Search API rate limit reached. Sleeping for %d seconds.\n\n' %(sleep_time))
+            time.sleep(sleep_time)
+            yield next(gen_back)
+        except Exception as e:
+            raise e
 
 def search(repo_to_search=None, user_to_search=None, gh_dorks_file=None):
     if gh_dorks_file is None:
@@ -27,13 +48,13 @@ def search(repo_to_search=None, user_to_search=None, gh_dorks_file=None):
             if not dork or dork[0] in '#;':
                 continue
             addendum = ''
-            if repo_to_search is not None:
+            if repo_to_search:
                 addendum = ' repo:' + repo_to_search
-            elif user_to_search is not None:
+            elif user_to_search:
                 addendum = ' user:' + user_to_search
 
             dork = dork + addendum
-            search_results = gh.search_code(dork)
+            search_results = search_wrapper(gh.search_code(dork))
             try:
                 for search_result in search_results:
                     found = True
@@ -53,16 +74,12 @@ def search(repo_to_search=None, user_to_search=None, gh_dorks_file=None):
                         ''
                     ]).format(**fmt_args)
                     print(result)
-            except github.exceptions.ForbiddenError as e:
-                print(e)
-                return
-                # need to retry in case of API rate limit reached
-                # not done yet
             except github.exceptions.GitHubError as e:
                 print('GitHubError encountered on search of dork: ' + dork)
                 print(e)
                 return
             except Exception as e:
+                print(e)
                 print('Error encountered on search of dork: ' + dork)
 
     if not found:
