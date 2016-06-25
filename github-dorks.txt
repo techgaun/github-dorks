@@ -50,3 +50,6 @@ filename:sshd_config
 filename:dhcpd.conf
 filename:prod.exs NOT "prod.secret.exs"
 filename:prod.secret.exs
+filename:configuration.php JConfig password
+filename:config.php dbpasswd
+path:sites databases password

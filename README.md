@@ -99,3 +99,6 @@ filename:sshd_config                            | OpenSSH server config
 filename:dhcpd.conf                             | DHCP service config
 filename:prod.exs NOT "prod.secret.exs"         | Phoenix prod configuration file
 filename:prod.secret.exs                        | Phoenix prod secret
+filename:configuration.php JConfig password     | Joomla configuration file
+filename:config.php dbpasswd                    | PHP application database password (e.g., phpBB forum software)
+path:sites databases password                   | Drupal website database credentials
