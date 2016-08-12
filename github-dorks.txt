@@ -53,3 +53,7 @@ filename:prod.secret.exs
 filename:configuration.php JConfig password
 filename:config.php dbpasswd
 path:sites databases password
+shodan_api_key language:python
+shodan_api_key language:shell
+shodan_api_key language:json
+shodan_api_key language:ruby
