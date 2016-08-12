@@ -52,6 +52,7 @@ filename:prod.exs NOT "prod.secret.exs"
 filename:prod.secret.exs
 filename:configuration.php JConfig password
 filename:config.php dbpasswd
+filename:config.php pass
 path:sites databases password
 shodan_api_key language:python
 shodan_api_key language:shell
