@@ -13,8 +13,12 @@ from sys import stderr
 gh_user = os.getenv('GH_USER', None)
 gh_pass = os.getenv('GH_PWD', None)
 gh_token = os.getenv('GH_TOKEN', None)
+gh_url = os.getenv('GH_URL', None)
 
-gh = github.GitHub(username=gh_user, password=gh_pass, token=gh_token)
+if gh_url is None:
+    gh = github.GitHub(username=gh_user, password=gh_pass, token=gh_token)
+else:
+    gh = github.GitHubEnterprise(url=gh_url, username=gh_user, password=gh_pass, token=gh_token)
 
 def search_wrapper(gen):
     while True:

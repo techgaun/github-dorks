@@ -17,6 +17,7 @@ pip install -r requirements.txt
 GH_USER  - Environment variable to specify github user
 GH_PWD   - Environment variable to specify password
 GH_TOKEN - Environment variable to specify github token
+GH_URL   - Environment variable to specify GitHub Enterprise base URL
 ```
 
 Some example usages are listed below:
@@ -31,6 +32,8 @@ python github-dork.py -u dev-nepal                                      # search
 GH_USER=techgaun GH_PWD=<mypass> python github-dork.py -u dev-nepal     # search as authenticated user
 
 GH_TOKEN=<github_token> python github-dork.py -u dev-nepal              # search using auth token
+
+GH_URL=https://github.example.com python github-dork.py -u dev-nepal    # search a GitHub Enterprise instance
 ```
 
 #### Limitations
