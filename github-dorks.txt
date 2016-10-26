@@ -59,3 +59,4 @@ shodan_api_key language:shell
 shodan_api_key language:json
 shodan_api_key language:ruby
 filename:shadow path:etc
+filename:passwd path:etc

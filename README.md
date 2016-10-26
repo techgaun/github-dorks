@@ -105,3 +105,6 @@ filename:prod.secret.exs                        | Phoenix prod secret
 filename:configuration.php JConfig password     | Joomla configuration file
 filename:config.php dbpasswd                    | PHP application database password (e.g., phpBB forum software)
 path:sites databases password                   | Drupal website database credentials
+shodan_api_key language:python                  | Shodan API keys (try other languages too)
+filename:shadow path:etc                        | Contains encrypted passwords and account information of new unix systems
+filename:passwd path:etc                        | Contains user account information including encrypted passwords of traditional unix systems
