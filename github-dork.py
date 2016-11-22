@@ -78,7 +78,7 @@ def search(repo_to_search=None, user_to_search=None, gh_dorks_file=None, active_
         gh_dorks_file = 'github-dorks.txt'
     if not os.path.isfile(gh_dorks_file):
         raise Exception('Error, the dorks file path is not valid')
-    print("Scannig user: ", user_to_search)
+    print("Scanning user: ", user_to_search)
     found = False
     with open(gh_dorks_file, 'r') as dork_file:
         for dork in dork_file:
