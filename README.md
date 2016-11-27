@@ -108,3 +108,5 @@ path:sites databases password                   | Drupal website database creden
 shodan_api_key language:python                  | Shodan API keys (try other languages too)
 filename:shadow path:etc                        | Contains encrypted passwords and account information of new unix systems
 filename:passwd path:etc                        | Contains user account information including encrypted passwords of traditional unix systems
+extension:avastlic                              | Contains license keys for Avast! Antivirus
+extension:dbeaver-data-sources.xml              | DBeaver config containing MySQL Credentials
