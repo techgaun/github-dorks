@@ -62,3 +62,4 @@ filename:shadow path:etc
 filename:passwd path:etc
 extension:avastlic
 extension:dbeaver-data-sources.xml
+filename:sftp-config.json
