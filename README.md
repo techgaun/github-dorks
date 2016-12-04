@@ -110,3 +110,4 @@ filename:shadow path:etc                        | Contains encrypted passwords a
 filename:passwd path:etc                        | Contains user account information including encrypted passwords of traditional unix systems
 extension:avastlic                              | Contains license keys for Avast! Antivirus
 extension:dbeaver-data-sources.xml              | DBeaver config containing MySQL Credentials
+filename:.esmtprc password                      | esmtp configuration
