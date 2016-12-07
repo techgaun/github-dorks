@@ -64,3 +64,4 @@ extension:avastlic
 extension:dbeaver-data-sources.xml
 filename:sftp-config.json
 filename:.esmtprc password
+extension:json googleusercontent client_secret
