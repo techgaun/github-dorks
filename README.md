@@ -111,3 +111,4 @@ filename:passwd path:etc                        | Contains user account informat
 extension:avastlic                              | Contains license keys for Avast! Antivirus
 extension:dbeaver-data-sources.xml              | DBeaver config containing MySQL Credentials
 filename:.esmtprc password                      | esmtp configuration
+extension:json googleusercontent client_secret  | OAuth credentials for accessing Google APIs
