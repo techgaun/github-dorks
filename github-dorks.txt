@@ -65,3 +65,4 @@ extension:dbeaver-data-sources.xml
 filename:sftp-config.json
 filename:.esmtprc password
 extension:json googleusercontent client_secret
+HOMEBREW_GITHUB_API_TOKEN language:shell

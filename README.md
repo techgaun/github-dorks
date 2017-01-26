@@ -112,3 +112,4 @@ extension:avastlic                              | Contains license keys for Avas
 extension:dbeaver-data-sources.xml              | DBeaver config containing MySQL Credentials
 filename:.esmtprc password                      | esmtp configuration
 extension:json googleusercontent client_secret  | OAuth credentials for accessing Google APIs
+HOMEBREW_GITHUB_API_TOKEN language:shell        | Github token usually set by homebrew users
