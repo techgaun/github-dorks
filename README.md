@@ -73,8 +73,8 @@ extension:json api.forecast.io                  | try variations, find api keys/
 extension:json mongolab.com                     | mongolab credentials in json configs
 extension:yaml mongolab.com                     | mongolab credentials in yaml configs (try with yml)
 jsforce extension:js conn.login                 | possible salesforce credentials in nodejs projects
-SF_USERNAME "salesforce"                        | possible salesforce credentials
-filename:.tugboat NOT "_tugboat"                | Digital Ocean tugboat config
+SF_USERNAME salesforce                          | possible salesforce credentials
+filename:.tugboat NOT _tugboat                  | Digital Ocean tugboat config
 HEROKU_API_KEY language:shell                   | Heroku api keys
 HEROKU_API_KEY language:json                    | Heroku api keys in json files
 filename:.netrc password                        | netrc that possibly holds sensitive credentials
@@ -100,7 +100,7 @@ filename:.history                               | history file (often used by ma
 filename:.sh_history                            | korn shell history
 filename:sshd_config                            | OpenSSH server config
 filename:dhcpd.conf                             | DHCP service config
-filename:prod.exs NOT "prod.secret.exs"         | Phoenix prod configuration file
+filename:prod.exs NOT prod.secret.exs           | Phoenix prod configuration file
 filename:prod.secret.exs                        | Phoenix prod secret
 filename:configuration.php JConfig password     | Joomla configuration file
 filename:config.php dbpasswd                    | PHP application database password (e.g., phpBB forum software)
@@ -113,4 +113,4 @@ extension:dbeaver-data-sources.xml              | DBeaver config containing MySQ
 filename:.esmtprc password                      | esmtp configuration
 extension:json googleusercontent client_secret  | OAuth credentials for accessing Google APIs
 HOMEBREW_GITHUB_API_TOKEN language:shell        | Github token usually set by homebrew users
-"xoxp" OR "xoxb"                                | Slack bot and private tokens
+xoxp OR xoxb                                    | Slack bot and private tokens
