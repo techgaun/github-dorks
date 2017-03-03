@@ -66,3 +66,4 @@ filename:sftp-config.json
 filename:.esmtprc password
 extension:json googleusercontent client_secret
 HOMEBREW_GITHUB_API_TOKEN language:shell
+"xoxp" OR "xoxb"
