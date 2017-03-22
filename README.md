@@ -114,3 +114,4 @@ filename:.esmtprc password                      | esmtp configuration
 extension:json googleusercontent client_secret  | OAuth credentials for accessing Google APIs
 HOMEBREW_GITHUB_API_TOKEN language:shell        | Github token usually set by homebrew users
 xoxp OR xoxb                                    | Slack bot and private tokens
+.mlab.com password                              | MLAB Hosted MongoDB Credentials
