@@ -56,41 +56,25 @@ def metasearch(repo_to_search=None, user_to_search=None, gh_dorks_file=None, act
             refresh_time
         )
 
-<<<<<<< HEAD
-def monit(gh_dorks_file=None,active_monit=None,refresh_time=60):
-    if gh_user is None:
-        raise Exception('Error, env Github user variable needed')
-    else:
-        print("Monitoring user private feed searching new code to be 'dorked'. Every new merged pull request trigger user scan.")
-        print("-----")
-        items_history = list()
-        gh_private_feed = "https://github.com/"+gh_user+".private.atom?token="+active_monit
-        while True:
-            feed = feedparser.parse( gh_private_feed )
-            for i in feed['items']:
-                if "merged pull" in i["title"]:
-                    if i["title"] not in items_history:
-                        search(user_to_search=i["author_detail"]["name"],gh_dorks_file=gh_dorks_file)
-                        items_history.append(i["title"])
-            print("Waiting for new items...")
-=======
 def monit(gh_dorks_file=None, active_monit=None, refresh_time=60):
     if gh_user is None:
         raise Exception('Error, env Github user variable needed')
     else:
-        print('Monitoring user private feed searching new code to be dorked. Every new merged pull request trigger user scan.')
+        print('Monitoring user private feed or Global Github timeline feed looking for new code to be dorked. Every new code pushed trigger user scan.')
         print('-----')
         items_history = list()
-        gh_private_feed = "https://github.com/{}.private.atom?token={}".format(gh_user, active_monit)
+	if active_monit == 'timeline':
+        	gh_private_feed = 'https://github.com/timeline'
+	else:
+		gh_private_feed = "https://github.com/{}.private.atom?token={}".format(gh_user, active_monit)
         while True:
             feed = feedparser.parse(gh_private_feed)
             for i in feed['items']:
-                if 'merged pull' in i['title']:
+                if 'pushed to' in i['title']:
                     if i['title'] not in items_history:
                         search(user_to_search=i['author_detail']['name'], gh_dorks_file=gh_dorks_file)
                         items_history.append(i['title'])
             print('Waiting for new items...')
->>>>>>> upstream/master
             time.sleep(refresh_time)
 
 def search(repo_to_search=None, user_to_search=None, gh_dorks_file=None, active_monit=None):
@@ -98,11 +82,7 @@ def search(repo_to_search=None, user_to_search=None, gh_dorks_file=None, active_
         gh_dorks_file = 'github-dorks.txt'
     if not os.path.isfile(gh_dorks_file):
         raise Exception('Error, the dorks file path is not valid')
-<<<<<<< HEAD
-    print("Scannig user: ", user_to_search)
-=======
     print("Scanning user: ", user_to_search)
->>>>>>> upstream/master
     found = False
     with open(gh_dorks_file, 'r') as dork_file:
         for dork in dork_file:
@@ -191,11 +171,7 @@ def main():
         '--monit',
         dest='active_monit',
         action='store',
-<<<<<<< HEAD
-        help='Monitors Github user  private feed. Need to provide token from feed. Find this token on feed icon at Github.com (when logged)'
-=======
-        help='Monitors Github user private feed. Need to provide token from feed. Find this token on feed icon at Github.com (when logged)'
->>>>>>> upstream/master
+        help='Monitors Github user private feed or global timeline. -m <TOKEN> or use -m timeline. Your private token is in the private URL feed, find it at Github.com (logged)'
     )
 
     args = parser.parse_args()
@@ -208,4 +184,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
