@@ -17,6 +17,7 @@ pip install -r requirements.txt
 GH_USER  - Environment variable to specify github user
 GH_PWD   - Environment variable to specify password
 GH_TOKEN - Environment variable to specify github token
+GH_URL   - Environment variable to specify GitHub Enterprise base URL
 ```
 
 Some example usages are listed below:
@@ -31,6 +32,8 @@ python github-dork.py -u dev-nepal                                      # search
 GH_USER=techgaun GH_PWD=<mypass> python github-dork.py -u dev-nepal     # search as authenticated user
 
 GH_TOKEN=<github_token> python github-dork.py -u dev-nepal              # search using auth token
+
+GH_URL=https://github.example.com python github-dork.py -u dev-nepal    # search a GitHub Enterprise instance
 ```
 
 #### Limitations
@@ -70,8 +73,8 @@ extension:json api.forecast.io                  | try variations, find api keys/
 extension:json mongolab.com                     | mongolab credentials in json configs
 extension:yaml mongolab.com                     | mongolab credentials in yaml configs (try with yml)
 jsforce extension:js conn.login                 | possible salesforce credentials in nodejs projects
-SF_USERNAME "salesforce"                        | possible salesforce credentials
-filename:.tugboat NOT "_tugboat"                | Digital Ocean tugboat config
+SF_USERNAME salesforce                          | possible salesforce credentials
+filename:.tugboat NOT _tugboat                  | Digital Ocean tugboat config
 HEROKU_API_KEY language:shell                   | Heroku api keys
 HEROKU_API_KEY language:json                    | Heroku api keys in json files
 filename:.netrc password                        | netrc that possibly holds sensitive credentials
@@ -97,8 +100,18 @@ filename:.history                               | history file (often used by ma
 filename:.sh_history                            | korn shell history
 filename:sshd_config                            | OpenSSH server config
 filename:dhcpd.conf                             | DHCP service config
-filename:prod.exs NOT "prod.secret.exs"         | Phoenix prod configuration file
+filename:prod.exs NOT prod.secret.exs           | Phoenix prod configuration file
 filename:prod.secret.exs                        | Phoenix prod secret
 filename:configuration.php JConfig password     | Joomla configuration file
 filename:config.php dbpasswd                    | PHP application database password (e.g., phpBB forum software)
 path:sites databases password                   | Drupal website database credentials
+shodan_api_key language:python                  | Shodan API keys (try other languages too)
+filename:shadow path:etc                        | Contains encrypted passwords and account information of new unix systems
+filename:passwd path:etc                        | Contains user account information including encrypted passwords of traditional unix systems
+extension:avastlic                              | Contains license keys for Avast! Antivirus
+extension:dbeaver-data-sources.xml              | DBeaver config containing MySQL Credentials
+filename:.esmtprc password                      | esmtp configuration
+extension:json googleusercontent client_secret  | OAuth credentials for accessing Google APIs
+HOMEBREW_GITHUB_API_TOKEN language:shell        | Github token usually set by homebrew users
+xoxp OR xoxb                                    | Slack bot and private tokens
+.mlab.com password                              | MLAB Hosted MongoDB Credentials

@@ -21,8 +21,8 @@ extension:json api.forecast.io
 extension:json mongolab.com
 extension:yaml mongolab.com
 jsforce extension:js conn.login
-SF_USERNAME "salesforce"
-filename:.tugboat NOT "_tugboat"
+SF_USERNAME salesforce
+filename:.tugboat NOT _tugboat
 HEROKU_API_KEY language:shell
 HEROKU_API_KEY language:json
 filename:.netrc password
@@ -48,7 +48,7 @@ filename:.history
 filename:.sh_history
 filename:sshd_config
 filename:dhcpd.conf
-filename:prod.exs NOT "prod.secret.exs"
+filename:prod.exs NOT prod.secret.exs
 filename:prod.secret.exs
 filename:configuration.php JConfig password
 filename:config.php dbpasswd
@@ -59,4 +59,16 @@ shodan_api_key language:shell
 shodan_api_key language:json
 shodan_api_key language:ruby
 filename:shadow path:etc
+<<<<<<< HEAD
 remove password
+=======
+filename:passwd path:etc
+extension:avastlic
+extension:dbeaver-data-sources.xml
+filename:sftp-config.json
+filename:.esmtprc password
+extension:json googleusercontent client_secret
+HOMEBREW_GITHUB_API_TOKEN language:shell
+xoxp OR xoxb
+.mlab.com password
+>>>>>>> upstream/master

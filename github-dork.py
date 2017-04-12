@@ -14,8 +14,13 @@ from sys import stderr
 gh_user = os.getenv('GH_USER', None)
 gh_pass = os.getenv('GH_PWD', None)
 gh_token = os.getenv('GH_TOKEN', None)
+gh_url = os.getenv('GH_URL', None)
 
-gh = github.GitHub(username=gh_user, password=gh_pass, token=gh_token)
+if gh_url is None:
+    gh = github.GitHub(username=gh_user, password=gh_pass, token=gh_token)
+else:
+    gh = github.GitHubEnterprise(url=gh_url, username=gh_user, password=gh_pass, token=gh_token)
+
 
 def search_wrapper(gen):
     while True:
@@ -26,7 +31,7 @@ def search_wrapper(gen):
             raise
         except github.exceptions.ForbiddenError as e:
             search_rate_limit = gh.rate_limit()['resources']['search']
-            limit_remaining = search_rate_limit['remaining']
+            # limit_remaining = search_rate_limit['remaining']
             reset_time = search_rate_limit['reset']
             current_time = int(time.time())
             sleep_time = reset_time - current_time + 1
@@ -51,6 +56,7 @@ def metasearch(repo_to_search=None, user_to_search=None, gh_dorks_file=None, act
             refresh_time
         )
 
+<<<<<<< HEAD
 def monit(gh_dorks_file=None,active_monit=None,refresh_time=60):
     if gh_user is None:
         raise Exception('Error, env Github user variable needed')
@@ -67,6 +73,24 @@ def monit(gh_dorks_file=None,active_monit=None,refresh_time=60):
                         search(user_to_search=i["author_detail"]["name"],gh_dorks_file=gh_dorks_file)
                         items_history.append(i["title"])
             print("Waiting for new items...")
+=======
+def monit(gh_dorks_file=None, active_monit=None, refresh_time=60):
+    if gh_user is None:
+        raise Exception('Error, env Github user variable needed')
+    else:
+        print('Monitoring user private feed searching new code to be dorked. Every new merged pull request trigger user scan.')
+        print('-----')
+        items_history = list()
+        gh_private_feed = "https://github.com/{}.private.atom?token={}".format(gh_user, active_monit)
+        while True:
+            feed = feedparser.parse(gh_private_feed)
+            for i in feed['items']:
+                if 'merged pull' in i['title']:
+                    if i['title'] not in items_history:
+                        search(user_to_search=i['author_detail']['name'], gh_dorks_file=gh_dorks_file)
+                        items_history.append(i['title'])
+            print('Waiting for new items...')
+>>>>>>> upstream/master
             time.sleep(refresh_time)
 
 def search(repo_to_search=None, user_to_search=None, gh_dorks_file=None, active_monit=None):
@@ -74,7 +98,11 @@ def search(repo_to_search=None, user_to_search=None, gh_dorks_file=None, active_
         gh_dorks_file = 'github-dorks.txt'
     if not os.path.isfile(gh_dorks_file):
         raise Exception('Error, the dorks file path is not valid')
+<<<<<<< HEAD
     print("Scannig user: ", user_to_search)
+=======
+    print("Scanning user: ", user_to_search)
+>>>>>>> upstream/master
     found = False
     with open(gh_dorks_file, 'r') as dork_file:
         for dork in dork_file:
@@ -163,7 +191,11 @@ def main():
         '--monit',
         dest='active_monit',
         action='store',
+<<<<<<< HEAD
         help='Monitors Github user  private feed. Need to provide token from feed. Find this token on feed icon at Github.com (when logged)'
+=======
+        help='Monitors Github user private feed. Need to provide token from feed. Find this token on feed icon at Github.com (when logged)'
+>>>>>>> upstream/master
     )
 
     args = parser.parse_args()
