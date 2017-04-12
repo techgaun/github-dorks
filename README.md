@@ -29,6 +29,10 @@ python github-dork.py -u techgaun                                       # search
 
 python github-dork.py -u dev-nepal                                      # search all repos of an organization
 
+GH_USER=techgaun python github-dork.py -m <PRIVATE_FEED_TOKEN>		# search all users pushed to repos user watch
+
+GH_USER=techgaun python github-dork.py -m timeline          		# search all users pushed to repos (global)
+
 GH_USER=techgaun GH_PWD=<mypass> python github-dork.py -u dev-nepal     # search as authenticated user
 
 GH_TOKEN=<github_token> python github-dork.py -u dev-nepal              # search using auth token

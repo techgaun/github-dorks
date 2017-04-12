@@ -59,6 +59,7 @@ shodan_api_key language:shell
 shodan_api_key language:json
 shodan_api_key language:ruby
 filename:shadow path:etc
+remove password
 filename:passwd path:etc
 extension:avastlic
 extension:dbeaver-data-sources.xml
@@ -68,3 +69,4 @@ extension:json googleusercontent client_secret
 HOMEBREW_GITHUB_API_TOKEN language:shell
 xoxp OR xoxb
 .mlab.com password
+
