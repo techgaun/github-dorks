@@ -68,3 +68,6 @@ extension:json googleusercontent client_secret
 HOMEBREW_GITHUB_API_TOKEN language:shell
 xoxp OR xoxb
 .mlab.com password
+filename:logins.json
+filename:CCCam.cfg
+msg nickserv identify filename:config

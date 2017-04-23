@@ -115,3 +115,6 @@ extension:json googleusercontent client_secret  | OAuth credentials for accessin
 HOMEBREW_GITHUB_API_TOKEN language:shell        | Github token usually set by homebrew users
 xoxp OR xoxb                                    | Slack bot and private tokens
 .mlab.com password                              | MLAB Hosted MongoDB Credentials
+filename:logins.json                            | Firefox saved password collection (key3.db usually in same repo)
+filename:CCCam.cfg                              | CCCam Server config file
+msg nickserv identify filename:config           | Possible IRC login passwords
