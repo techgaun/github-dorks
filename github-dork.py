@@ -47,9 +47,10 @@ def metasearch(repo_to_search=None,
                user_to_search=None,
                gh_dorks_file=None,
                active_monit=None,
+               output_filename=None,
                refresh_time=60):
     if active_monit is None:
-        search(repo_to_search, user_to_search, gh_dorks_file, active_monit)
+        search(repo_to_search, user_to_search, gh_dorks_file, active_monit, output_filename)
     else:
         monit(gh_dorks_file, active_monit, refresh_time)
 
@@ -82,7 +83,9 @@ def monit(gh_dorks_file=None, active_monit=None, refresh_time=60):
 def search(repo_to_search=None,
            user_to_search=None,
            gh_dorks_file=None,
-           active_monit=None):
+           active_monit=None,
+           output_filename=None):
+
     if gh_dorks_file is None:
         gh_dorks_file = 'github-dorks.txt'
     if not os.path.isfile(gh_dorks_file):
@@ -92,7 +95,15 @@ def search(repo_to_search=None,
     if repo_to_search:
         print("Scanning Repo: ", repo_to_search)
     found = False
+
+    outputFile = None
+    if output_filename:
+        outputFile = open(output_filename, 'w')
+
     with open(gh_dorks_file, 'r') as dork_file:
+        # Write CSV Header
+        if outputFile:
+            outputFile.write('Issue Type (Dork), Text Matches, File Path, Score/Relevance, URL of File\n')
         for dork in dork_file:
             dork = dork.strip()
             if not dork or dork[0] in '#;':
@@ -115,12 +126,18 @@ def search(repo_to_search=None,
                         'score': search_result.score,
                         'url': search_result.html_url
                     }
-                    result = '\n'.join([
-                        'Found result for {dork}',
-                        'Text matches: {text_matches}', 'File path: {path}',
-                        'Score/Relevance: {score}', 'URL of File: {url}', ''
-                    ]).format(**fmt_args)
-                    print(result)
+
+                    # Either write to file or print output
+                    if outputFile:
+                        outputFile.write('{dork}, {text_matches}, {path}, {score}, {url}\n'.format(**fmt_args))
+                    else:
+                        result = '\n'.join([
+                            'Found result for {dork}',
+                            'Text matches: {text_matches}', 'File path: {path}',
+                            'Score/Relevance: {score}', 'URL of File: {url}', ''
+                        ]).format(**fmt_args)
+                        print(result)
+
             except github.exceptions.GitHubError as e:
                 print('GitHubError encountered on search of dork: ' + dork)
                 print(e)
@@ -171,12 +188,21 @@ def main():
         help='Monitors Github user private feed with feed token'
     )
 
+    parser.add_argument(
+        '-o',
+        '--outputFile',
+        dest='output_filename',
+        action='store',
+        help='CSV File to write results to. This overwrites the file provided! Eg: out.csv'
+    )
+
     args = parser.parse_args()
     metasearch(
         repo_to_search=args.repo_to_search,
         user_to_search=args.user_to_search,
         gh_dorks_file=args.gh_dorks_file,
-        active_monit=args.active_monit)
+        active_monit=args.active_monit,
+        output_filename=args.output_filename)
 
 
 if __name__ == '__main__':
