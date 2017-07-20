@@ -118,3 +118,4 @@ xoxp OR xoxb                                    | Slack bot and private tokens
 filename:logins.json                            | Firefox saved password collection (key3.db usually in same repo)
 filename:CCCam.cfg                              | CCCam Server config file
 msg nickserv identify filename:config           | Possible IRC login passwords
+filename:settings.py SECRET_KEY                 | Django secret keys (usually allows for session hijacking, RCE, etc)

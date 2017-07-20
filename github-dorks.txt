@@ -71,3 +71,4 @@ xoxp OR xoxb
 filename:logins.json
 filename:CCCam.cfg
 msg nickserv identify filename:config
+filename:settings.py SECRET_KEY
