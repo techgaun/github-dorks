@@ -8,7 +8,9 @@ import time
 import feedparser
 from copy import copy
 from sys import stderr
+from common import post_to_slack, get_logger
 
+slack_channel = "#infra-scrum"
 gh_user = os.getenv('GH_USER', None)
 gh_pass = os.getenv('GH_PWD', None)
 gh_token = os.getenv('GH_TOKEN', None)
@@ -137,6 +139,7 @@ def search(repo_to_search=None,
                             'Score/Relevance: {score}', 'URL of File: {url}', ''
                         ]).format(**fmt_args)
                         print(result)
+                        post_to_slack(result, slack_channel)
 
             except github.exceptions.GitHubError as e:
                 print('GitHubError encountered on search of dork: ' + dork)
