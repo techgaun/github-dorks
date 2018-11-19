@@ -1,0 +1,9 @@
+README.rst
+setup.cfg
+setup.py
+Github_dork.egg-info/PKG-INFO
+Github_dork.egg-info/SOURCES.txt
+Github_dork.egg-info/dependency_links.txt
+Github_dork.egg-info/entry_points.txt
+Github_dork.egg-info/requires.txt
+Github_dork.egg-info/top_level.txt

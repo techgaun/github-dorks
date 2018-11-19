@@ -1,0 +1,20 @@
+Metadata-Version: 1.1
+Name: Github-dork
+Version: 0.1.0
+Summary: Github-dork is a tool to scan repositories for various credentials.
+Home-page: https://github.com/grofers/github-dorks
+Author: Avinash Jain
+Author-email: avinashjain030193@gmail.com
+License: MIT
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7

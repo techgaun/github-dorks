@@ -1,0 +1,3 @@
+[console_scripts]
+github-dorks = githubdork.test_secrets:main
+
