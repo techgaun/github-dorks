@@ -119,3 +119,9 @@ filename:logins.json                            | Firefox saved password collect
 filename:CCCam.cfg                              | CCCam Server config file
 msg nickserv identify filename:config           | Possible IRC login passwords
 filename:settings.py SECRET_KEY                 | Django secret keys (usually allows for session hijacking, RCE, etc)
+filename:deployment-config.json                 | Created by sftp-deployment for Atom, contains server details and credentials
+filename:.ftpconfig                             | Created by remote-ssh for Atom, contains SFTP/SSH server details and credentials
+filename:.remote-sync.json                      | Created by remote-sync for Atom, contains FTP and/or SCP/SFTP/SSH server details and credentials
+filename:sftp.json path:.vscode                 | Created by vscode-sftp for VSCode, contains SFTP/SSH server details and credentails
+filename:sftp-config.json                       | Created by SFTP for Sublime Text, contains FTP/FTPS or SFTP/SSH server details and credentials
+filename:WebServers.xml                         | Created by Jetbrains IDEs, contains webserver credentials with encoded passwords ([not encrypted!](https://intellij-support.jetbrains.com/hc/en-us/community/posts/207074025/comments/207034775)
