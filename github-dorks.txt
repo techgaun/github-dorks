@@ -77,6 +77,5 @@ filename:deployment-config.json
 filename:.ftpconfig
 filename:.remote-sync.json
 filename:sftp.json path:.vscode
-filename:sftp-config.json
 filename:WebServers.xml
 
