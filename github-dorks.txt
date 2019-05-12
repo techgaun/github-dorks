@@ -60,8 +60,8 @@ shodan_api_key language:json
 shodan_api_key language:ruby
 filename:shadow path:etc
 filename:passwd path:etc
-extension:avastlic
-extension:dbeaver-data-sources.xml
+extension:avastlic "support.avast.com"
+filename:dbeaver-data-sources.xml
 filename:sftp-config.json
 filename:.esmtprc password
 extension:json googleusercontent client_secret
