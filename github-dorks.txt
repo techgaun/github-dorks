@@ -73,6 +73,7 @@ filename:CCCam.cfg
 msg nickserv identify filename:config
 filename:settings.py SECRET_KEY
 filename:secrets.yml password
+filename:master.key path:config
 filename:deployment-config.json
 filename:.ftpconfig
 filename:.remote-sync.json

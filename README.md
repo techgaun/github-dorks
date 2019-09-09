@@ -119,6 +119,8 @@ filename:logins.json                            | Firefox saved password collect
 filename:CCCam.cfg                              | CCCam Server config file
 msg nickserv identify filename:config           | Possible IRC login passwords
 filename:settings.py SECRET_KEY                 | Django secret keys (usually allows for session hijacking, RCE, etc)
+filename:secrets.yml password                   | Usernames/passwords, Rails applications
+filename:master.key path:config                 | Rails master key (used for decrypting `credentials.yml.enc` for Rails 5.2+)
 filename:deployment-config.json                 | Created by sftp-deployment for Atom, contains server details and credentials
 filename:.ftpconfig                             | Created by remote-ssh for Atom, contains SFTP/SSH server details and credentials
 filename:.remote-sync.json                      | Created by remote-sync for Atom, contains FTP and/or SCP/SFTP/SSH server details and credentials
