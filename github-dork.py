@@ -27,7 +27,7 @@ def search_wrapper(gen):
         try:
             yield next(gen)
         except StopIteration:
-            raise
+            return
         except github.exceptions.ForbiddenError as e:
             search_rate_limit = gh.rate_limit()['resources']['search']
             # limit_remaining = search_rate_limit['remaining']
