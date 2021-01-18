@@ -1,8 +1,8 @@
 # Github Dorks
-[Github search](https://github.com/search) is quite powerful and useful feature and can be used to search sensitive data on the repositories. Collection of github dorks that can reveal sensitive personal and/or organizational information such as private keys, credentials, authentication tokens, etc. This list is supposed to be useful for assessing security and performing pen-testing of systems.
+[Github Search](https://github.com/search) is a quite powerful and useful feature that can be used to search for sensitive data on repositories. Collection of Github dorks can reveal sensitive personal and/or organizational information such as private keys, credentials, authentication tokens, etc. This list is supposed to be useful for assessing security and performing pen-testing of systems.
 
 ### GitHub Dork Search Tool
-[github-dork.py](github-dork.py) is a simple python tool that can search through your repository or your organization/user repositories. Its not a perfect tool at the moment but provides a basic functionality to automate the search on your repositories against the dorks specified in text file.
+[github-dork.py](github-dork.py) is a simple python tool that can search through your repository or your organization/user repositories. It's not a perfect tool at the moment but provides a basic functionality to automate the search on your repositories against the dorks specified in text file.
 
 #### Installation
 This tool uses [github3.py](https://github.com/sigmavirus24/github3.py) to talk with GitHub Search API.
@@ -14,18 +14,18 @@ pip install -r requirements.txt
 
 #### Usage
 ```
-GH_USER  - Environment variable to specify github user
+GH_USER  - Environment variable to specify Github user
 GH_PWD   - Environment variable to specify password
-GH_TOKEN - Environment variable to specify github token
+GH_TOKEN - Environment variable to specify Github token
 GH_URL   - Environment variable to specify GitHub Enterprise base URL
 ```
 
 Some example usages are listed below:
 
 ```shell
-python github-dork.py -r techgaun/github-dorks                          # search single repo
+python github-dork.py -r techgaun/github-dorks                          # search a single repo
 
-python github-dork.py -u techgaun                                       # search all repos of user
+python github-dork.py -u techgaun                                       # search all repos of a user
 
 python github-dork.py -u dev-nepal                                      # search all repos of an organization
 
@@ -43,10 +43,10 @@ GH_URL=https://github.example.com python github-dork.py -u dev-nepal    # search
 - ~~Handle rate limit and retry. PR welcome~~
 
 ### Contribution
-Please consider contributing the dorks that can reveal potentially sensitive information in github.
+Please consider contributing dorks that can reveal potentially sensitive information on Github.
 
 ### List of Dorks
-I am not categorizing at the moment. Instead I am going to just the list of dorks with a description. Many of the dorks can be modified to make the search more specific or generic. You can see more options [here](https://github.com/search#search_cheatsheet_pane).
+I am not categorizing at the moment. Instead, I am going to just the list of dorks with a description. Many of the dorks can be modified to make the search more specific or generic. You can see more options [here](https://github.com/search#search_cheatsheet_pane).
 
  Dork                                           | Description
 ------------------------------------------------|--------------------------------------------------------------------------
