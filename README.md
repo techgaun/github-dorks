@@ -127,3 +127,6 @@ filename:.remote-sync.json                      | Created by remote-sync for Ato
 filename:sftp.json path:.vscode                 | Created by vscode-sftp for VSCode, contains SFTP/SSH server details and credentails
 filename:sftp-config.json                       | Created by SFTP for Sublime Text, contains FTP/FTPS or SFTP/SSH server details and credentials
 filename:WebServers.xml                         | Created by Jetbrains IDEs, contains webserver credentials with encoded passwords ([not encrypted!](https://intellij-support.jetbrains.com/hc/en-us/community/posts/207074025/comments/207034775))
+filename:github-recovery-codes.txt              | GitHub recovery key
+filename:gitlab-recovery-codes.txt              | GitLab recovery key
+filename:discord_backup_codes.txt               | Discord recovery key
