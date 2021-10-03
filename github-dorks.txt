@@ -80,4 +80,5 @@ filename:.remote-sync.json
 filename:sftp.json path:.vscode
 filename:WebServers.xml
 filename:jupyter_notebook_config.json
-
+extension:yaml cloud.redislabs.com
+extension:json cloud.redislabs.com
