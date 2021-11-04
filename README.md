@@ -130,3 +130,5 @@ filename:WebServers.xml                         | Created by Jetbrains IDEs, con
 filename:github-recovery-codes.txt              | GitHub recovery key
 filename:gitlab-recovery-codes.txt              | GitLab recovery key
 filename:discord_backup_codes.txt               | Discord recovery key
+extension:yaml cloud.redislabs.com              | Redis credentials provided by Redis Labs found in a YAML file
+extension:json cloud.redislabs.com              | Redis credentials provided by Redis Labs found in a JSON file
