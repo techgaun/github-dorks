@@ -80,6 +80,7 @@ filename:.remote-sync.json
 filename:sftp.json path:.vscode
 filename:WebServers.xml
 filename:jupyter_notebook_config.json
+"api_hash" "api_id"
 "https://hooks.slack.com/services/"
 filename:github-recovery-codes.txt
 filename:gitlab-recovery-codes.txt
