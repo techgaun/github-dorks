@@ -80,5 +80,8 @@ filename:.remote-sync.json
 filename:sftp.json path:.vscode
 filename:WebServers.xml
 filename:jupyter_notebook_config.json
+filename:github-recovery-codes.txt
+filename:gitlab-recovery-codes.txt
+filename:discord_backup_codes.txt
 extension:yaml cloud.redislabs.com
 extension:json cloud.redislabs.com
