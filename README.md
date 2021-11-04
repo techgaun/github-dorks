@@ -1,21 +1,26 @@
 # Github Dorks
+
 [Github Search](https://github.com/search) is a quite powerful and useful feature that can be used to search for sensitive data on repositories. Collection of Github dorks can reveal sensitive personal and/or organizational information such as private keys, credentials, authentication tokens, etc. This list is supposed to be useful for assessing security and performing pen-testing of systems.
 
-### GitHub Dork Search Tool
-[github-dork.py](github-dork.py) is a simple python tool that can search through your repository or your organization/user repositories. It's not a perfect tool at the moment but provides a basic functionality to automate the search on your repositories against the dorks specified in text file.
+## GitHub Dork Search Tool
 
-#### Installation
+[github-dork.py](github-dork.py) is a simple python tool that can search through your repository or your organization/user repositories. It's not a perfect tool at the moment but provides basic functionality to automate the search on your repositories against the dorks specified in the text file.
+
+### Installation
+
 This tool uses [github3.py](https://github.com/sigmavirus24/github3.py) to talk with GitHub Search API.
 
 Clone this repository and run:
+
 ```shell
 pip install -r requirements.txt
 ```
 
-#### Usage
+### Usage
+
 ```
 GH_USER  - Environment variable to specify Github user
-GH_PWD   - Environment variable to specify password
+GH_PWD   - Environment variable to specify a password
 GH_TOKEN - Environment variable to specify Github token
 GH_URL   - Environment variable to specify GitHub Enterprise base URL
 ```
@@ -36,16 +41,18 @@ GH_TOKEN=<github_token> python github-dork.py -u dev-nepal              # search
 GH_URL=https://github.example.com python github-dork.py -u dev-nepal    # search a GitHub Enterprise instance
 ```
 
-#### Limitations
+### Limitations
 
 - Authenticated requests get a higher rate limit. But, since this tool waits for the api rate limit to be reset (which is usually less than a minute), it can be slightly slow.
 - Output formatting is not great. PR welcome
 - ~~Handle rate limit and retry. PR welcome~~
 
 ### Contribution
+
 Please consider contributing dorks that can reveal potentially sensitive information on Github.
 
 ### List of Dorks
+
 I am not categorizing at the moment. Instead, I am going to just the list of dorks with a description. Many of the dorks can be modified to make the search more specific or generic. You can see more options [here](https://github.com/search#search_cheatsheet_pane).
 
  Dork                                           | Description
