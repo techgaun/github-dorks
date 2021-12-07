@@ -7,7 +7,7 @@ import argparse
 import time
 import feedparser
 from copy import copy
-from sys import stderr
+from sys import stderr, prefix
 
 gh_user = os.getenv('GH_USER', None)
 gh_pass = os.getenv('GH_PWD', None)
@@ -87,7 +87,12 @@ def search(repo_to_search=None,
            output_filename=None):
 
     if gh_dorks_file is None:
-        gh_dorks_file = 'github-dorks.txt'
+        for path_prefix in ['.', os.path.join(prefix, 'github-dorks/')]:
+            filename = os.path.join(path_prefix, 'github-dorks.txt')
+            if os.path.isfile(filename):
+                gh_dorks_file = filename
+                break
+
     if not os.path.isfile(gh_dorks_file):
         raise Exception('Error, the dorks file path is not valid')
     if user_to_search:

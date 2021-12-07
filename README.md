@@ -13,7 +13,7 @@ This tool uses [github3.py](https://github.com/sigmavirus24/github3.py) to talk 
 Clone this repository and run:
 
 ```shell
-pip install -r requirements.txt
+pip install .
 ```
 
 ### Usage
@@ -28,17 +28,17 @@ GH_URL   - Environment variable to specify GitHub Enterprise base URL
 Some example usages are listed below:
 
 ```shell
-python github-dork.py -r techgaun/github-dorks                          # search a single repo
+github-dork.py -r techgaun/github-dorks                          # search a single repo
 
-python github-dork.py -u techgaun                                       # search all repos of a user
+github-dork.py -u techgaun                                       # search all repos of a user
 
-python github-dork.py -u dev-nepal                                      # search all repos of an organization
+github-dork.py -u dev-nepal                                      # search all repos of an organization
 
-GH_USER=techgaun GH_PWD=<mypass> python github-dork.py -u dev-nepal     # search as authenticated user
+GH_USER=techgaun GH_PWD=<mypass> github-dork.py -u dev-nepal     # search as authenticated user
 
-GH_TOKEN=<github_token> python github-dork.py -u dev-nepal              # search using auth token
+GH_TOKEN=<github_token> github-dork.py -u dev-nepal              # search using auth token
 
-GH_URL=https://github.example.com python github-dork.py -u dev-nepal    # search a GitHub Enterprise instance
+GH_URL=https://github.example.com github-dork.py -u dev-nepal    # search a GitHub Enterprise instance
 ```
 
 ### Limitations
