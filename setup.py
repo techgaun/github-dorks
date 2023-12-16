@@ -14,7 +14,7 @@ setup(
     scripts=['github-dork.py'],
     data_files=[('github-dorks', ['github-dorks.txt'])],
     install_requires=[
-        'github3.py==1.0.0a2',
+        'github3.py==4.0.1',
         'feedparser==6.0.2',
     ],
 )
