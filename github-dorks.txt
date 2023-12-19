@@ -87,3 +87,4 @@ filename:gitlab-recovery-codes.txt
 filename:discord_backup_codes.txt
 extension:yaml cloud.redislabs.com
 extension:json cloud.redislabs.com
+DATADOG_API_KEY language:shell
