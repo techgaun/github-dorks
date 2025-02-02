@@ -1,3 +1,5 @@
+[![Docker Build & Test](https://github.com/techgaun/github-dorks/actions/workflows/docker-build.yml/badge.svg)](https://github.com/techgaun/github-dorks/actions/workflows/docker-build.yml)
+
 # Github Dorks
 
 [Github Search](https://github.com/search) is a quite powerful and useful feature that can be used to search for sensitive data on repositories. Collection of Github dorks can reveal sensitive personal and/or organizational information such as private keys, credentials, authentication tokens, etc. This list is supposed to be useful for assessing security and performing pen-testing of systems.
@@ -14,6 +16,24 @@ Clone this repository and run:
 
 ```shell
 pip install .
+```
+
+### Docker Installation
+
+You can also run github-dorks using Docker for a consistent environment:
+
+```shell
+# Build the Docker image
+docker build -t github-dorks .
+
+# Run with a GitHub token (recommended)
+docker run -e GH_TOKEN=your_github_token github-dorks -u someuser
+
+# Run with username/password
+docker run -e GH_USER=your_username -e GH_PWD=your_password github-dorks -u someuser
+
+# Save results to a CSV file
+docker run -v $(pwd)/output:/app/output -e GH_TOKEN=your_github_token github-dorks -u someuser -o /app/output/results.csv
 ```
 
 ### Usage
