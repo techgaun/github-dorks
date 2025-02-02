@@ -16,6 +16,24 @@ Clone this repository and run:
 pip install .
 ```
 
+### Docker Installation
+
+You can also run github-dorks using Docker for a consistent environment:
+
+```shell
+# Build the Docker image
+docker build -t github-dorks .
+
+# Run with a GitHub token (recommended)
+docker run -e GH_TOKEN=your_github_token github-dorks -u someuser
+
+# Run with username/password
+docker run -e GH_USER=your_username -e GH_PWD=your_password github-dorks -u someuser
+
+# Save results to a CSV file
+docker run -v $(pwd)/output:/app/output -e GH_TOKEN=your_github_token github-dorks -u someuser -o /app/output/results.csv
+```
+
 ### Usage
 
 ```
