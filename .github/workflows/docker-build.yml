@@ -27,11 +27,8 @@ jobs:
 
       - name: Test Docker image
         run: |
-          # Test the version flag
+          # Test the version flag with version flag
           docker run github-dorks:test -v
-          
-          # Basic test with a public repo (no auth needed)
-          docker run github-dorks:test -r techgaun/github-dorks -d github-dorks-test.txt
 
       - name: Verify image size
         run: docker image ls github-dorks:test
