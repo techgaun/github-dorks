@@ -1,5 +1,4 @@
 import csv
-import importlib.util
 import io
 import sys
 import tempfile
@@ -28,11 +27,7 @@ fake_github3.exceptions = types.SimpleNamespace(
 sys.modules.setdefault('github3', fake_github3)
 sys.modules.setdefault('feedparser', types.ModuleType('feedparser'))
 
-spec = importlib.util.spec_from_file_location(
-    'github_dork', Path(__file__).parents[1] / 'github-dork.py'
-)
-github_dork = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(github_dork)
+from github_dorks import __version__, cli as github_dork  # noqa: E402
 
 
 class SearchResult:
@@ -88,6 +83,17 @@ class SearchTests(unittest.TestCase):
     def test_rejects_missing_dorks_file_with_clear_error(self):
         with self.assertRaisesRegex(Exception, 'dorks file path is not valid'):
             github_dork.search(gh_dorks_file='/does/not/exist')
+
+
+class CommandLineTests(unittest.TestCase):
+    def test_version_comes_from_package_metadata(self):
+        stdout = io.StringIO()
+        with patch.object(sys, 'argv', ['github-dorks', '--version']):
+            with redirect_stdout(stdout), self.assertRaises(SystemExit) as exit_info:
+                github_dork.main()
+
+        self.assertEqual(exit_info.exception.code, 0)
+        self.assertEqual(stdout.getvalue().strip(), f'github-dorks {__version__}')
 
 
 class DorkDictionaryTests(unittest.TestCase):

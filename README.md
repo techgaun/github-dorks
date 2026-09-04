@@ -6,7 +6,8 @@
 
 ## GitHub Dork Search Tool
 
-[github-dork.py](github-dork.py) is a simple python tool that can search through your repository or your organization/user repositories. It's not a perfect tool at the moment but provides basic functionality to automate the search on your repositories against the dorks specified in the text file.
+`github-dorks` is a Python command-line tool that searches a repository or an
+organization/user's repositories using the queries in a dorks file.
 
 ### Installation
 
@@ -48,18 +49,21 @@ GH_URL   - Environment variable to specify GitHub Enterprise base URL
 Some example usages are listed below:
 
 ```shell
-github-dork.py -r techgaun/github-dorks                          # search a single repo
+github-dorks -r techgaun/github-dorks                          # search a single repo
 
-github-dork.py -u techgaun                                       # search all repos of a user
+github-dorks -u techgaun                                       # search all repos of a user
 
-github-dork.py -u dev-nepal                                      # search all repos of an organization
+github-dorks -u dev-nepal                                      # search all repos of an organization
 
-GH_USER=techgaun GH_PWD=<mypass> github-dork.py -u dev-nepal     # search as authenticated user
+GH_USER=techgaun GH_PWD=<mypass> github-dorks -u dev-nepal     # search as authenticated user
 
-GH_TOKEN=<github_token> github-dork.py -u dev-nepal              # search using auth token
+GH_TOKEN=<github_token> github-dorks -u dev-nepal              # search using auth token
 
-GH_URL=https://github.example.com github-dork.py -u dev-nepal    # search a GitHub Enterprise instance
+GH_URL=https://github.example.com github-dorks -u dev-nepal    # search a GitHub Enterprise instance
 ```
+
+The legacy `python github-dork.py ...` invocation remains available for
+compatibility. The package can also run as `python -m github_dorks ...`.
 
 ### Development
 
