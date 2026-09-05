@@ -60,10 +60,17 @@ GH_USER=techgaun GH_PWD=<mypass> github-dorks -u dev-nepal     # search as authe
 GH_TOKEN=<github_token> github-dorks -u dev-nepal              # search using auth token
 
 GH_URL=https://github.example.com github-dorks -u dev-nepal    # search a GitHub Enterprise instance
+
+github-dorks -r techgaun/github-dorks --max-retries 5         # retry recoverable failures up to five times
 ```
 
 The legacy `python github-dork.py ...` invocation remains available for
 compatibility. The package can also run as `python -m github_dorks ...`.
+
+Each scan ends with a summary of queries, matches, failures, retries, and
+elapsed time. The command exits with status `0` after a complete scan, `2` when
+one or more queries failed, and `1` for fatal configuration, file, or
+authentication errors.
 
 ### Development
 
@@ -77,9 +84,9 @@ The CI test matrix covers Python 3.10 through 3.13.
 
 ### Limitations
 
-- Authenticated requests get a higher rate limit. But, since this tool waits for the api rate limit to be reset (which is usually less than a minute), it can be slightly slow.
+- Authenticated requests receive higher rate limits. Searches may pause until
+  GitHub resets the search limit.
 - Search results can be printed to the terminal or written as CSV.
-- ~~Handle rate limit and retry. PR welcome~~
 
 ### Contribution
 
