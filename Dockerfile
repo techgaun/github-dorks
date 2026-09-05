@@ -4,9 +4,9 @@ FROM python:3.12-slim
 WORKDIR /app
 
 # Copy only the files needed to install and run the project
-COPY github-dork.py /app/
+COPY github_dorks /app/github_dorks
 COPY github-dorks.txt /app/
-COPY setup.py /app/
+COPY pyproject.toml /app/
 COPY README.md /app/
 
 RUN pip install --no-cache-dir .
@@ -18,4 +18,4 @@ ENV PYTHONIOENCODING=UTF-8
 # Create volume for potential output files
 VOLUME ["/app/output"]
 
-ENTRYPOINT ["python", "github-dork.py"]
+ENTRYPOINT ["github-dorks"]

@@ -1,2 +1,0 @@
-github3.py==4.0.1
-feedparser>=6.0.12,<7

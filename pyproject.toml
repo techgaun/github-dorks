@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "github-dorks"
+dynamic = ["version"]
+description = "Find leaked secrets with GitHub code search."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+authors = [
+  { name = "Samar Dhwoj Acharya", email = "coolsamar207@gmail.com" },
+]
+dependencies = [
+  "feedparser>=6.0.12,<7",
+  "github3.py==4.0.1",
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "Intended Audience :: Information Technology",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Security",
+]
+
+[project.urls]
+Homepage = "https://github.com/techgaun/github-dorks"
+Issues = "https://github.com/techgaun/github-dorks/issues"
+
+[project.scripts]
+github-dorks = "github_dorks.cli:main"
+
+[tool.setuptools.dynamic]
+version = { attr = "github_dorks.__version__" }
+
+[tool.setuptools.data-files]
+github-dorks = ["github-dorks.txt"]
