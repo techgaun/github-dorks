@@ -1,6 +1,5 @@
 """GitHub client construction and reliable code-search execution."""
 
-import csv
 import os
 import time
 from contextlib import nullcontext
@@ -10,6 +9,8 @@ from sys import prefix
 
 import github3 as github
 from requests import exceptions as requests_exceptions
+
+from github_dorks.output import create_writer
 
 
 @dataclass
@@ -128,29 +129,19 @@ def iter_search_results(client, query, stats, max_retries=3,
             sleep(delay)
 
 
-def _write_result(result, query, csv_writer, stdout):
-    values = {
+def _result_record(result, query):
+    return {
         'dork': query,
         'text_matches': result.text_matches,
         'path': result.path,
         'score': result.score,
         'url': result.html_url,
     }
-    if csv_writer:
-        csv_writer.writerow(values.values())
-        return
-    stdout.write('\n'.join([
-        'Found result for {dork}',
-        'Text matches: {text_matches}',
-        'File path: {path}',
-        'Score/Relevance: {score}',
-        'URL of File: {url}',
-        '',
-    ]).format(**values) + '\n')
 
 
 def search(repo_to_search=None, user_to_search=None, gh_dorks_file=None,
-           output_filename=None, client=None, max_retries=3,
+           output_filename=None, output_format=None, force=False,
+           quiet=False, verbose=False, client=None, max_retries=3,
            sleep=time.sleep, now=time.time, monotonic=time.monotonic,
            stdout=None, stderr=None):
     """Run every dork and return statistics, isolating per-query failures."""
@@ -162,50 +153,63 @@ def search(repo_to_search=None, user_to_search=None, gh_dorks_file=None,
         raise ValueError('exactly one repository or user scope is required')
     client = create_client() if client is None else client
     dorks_path = find_dorks_file(gh_dorks_file)
+    output_format = output_format or ('csv' if output_filename else 'text')
     stats = ScanStats()
     started_at = monotonic()
     scope = f' repo:{repo_to_search}' if repo_to_search else f' user:{user_to_search}'
     label = 'Repo' if repo_to_search else 'User'
-    stdout.write(f'Scanning {label}: {scope.split(":", 1)[1]}\n')
+    status_stream = stderr if not output_filename and output_format != 'text' else stdout
+    if not quiet:
+        status_stream.write(f'Scanning {label}: {scope.split(":", 1)[1]}\n')
 
     output_context = (
-        open(output_filename, 'w', newline='', encoding='utf-8')
-        if output_filename else nullcontext(None)
+        open(
+            output_filename, 'w' if force else 'x', newline='', encoding='utf-8'
+        ) if output_filename else nullcontext(stdout)
     )
     with dorks_path.open(encoding='utf-8') as dork_file, output_context as output_file:
-        csv_writer = csv.writer(output_file) if output_file else None
-        if csv_writer:
-            csv_writer.writerow([
-                'Issue Type (Dork)', 'Text Matches', 'File Path',
-                'Score/Relevance', 'URL of File',
-            ])
-        for line in dork_file:
-            dork = line.strip()
-            if not dork or dork[0] in '#;':
-                continue
-            query = dork + scope
-            stats.queries += 1
-            try:
-                for result in iter_search_results(
+        writer = create_writer(output_format, output_file)
+        writer.start()
+        try:
+            for line in dork_file:
+                dork = line.strip()
+                if not dork or dork[0] in '#;':
+                    continue
+                query = dork + scope
+                stats.queries += 1
+                if verbose and not quiet:
+                    status_stream.write(f'Searching: {query}\n')
+                results = iter_search_results(
                     client, query, stats, max_retries, sleep, now, stderr
-                ):
-                    stats.matches += 1
-                    _write_result(result, query, csv_writer, stdout)
-            except Exception as error:
-                authentication_error = getattr(
-                    github.exceptions, 'AuthenticationFailed', ()
                 )
-                if authentication_error and isinstance(error, authentication_error):
-                    raise
-                stats.failures += 1
-                stderr.write(f'Query failed: {query}\n{error}\n')
+                while True:
+                    try:
+                        result = next(results)
+                    except StopIteration:
+                        break
+                    except Exception as error:
+                        authentication_error = getattr(
+                            github.exceptions, 'AuthenticationFailed', ()
+                        )
+                        if authentication_error and isinstance(
+                            error, authentication_error
+                        ):
+                            raise
+                        stats.failures += 1
+                        stderr.write(f'Query failed: {query}\n{error}\n')
+                        break
+                    stats.matches += 1
+                    writer.write(_result_record(result, query))
+        finally:
+            stats.elapsed_seconds = monotonic() - started_at
+            writer.finish(stats)
 
-    stats.elapsed_seconds = monotonic() - started_at
-    if not stats.matches and not stats.failures:
-        stdout.write(f'No results for your dork search{scope}. Hurray!\n')
-    stdout.write(
-        f'Summary: {stats.queries} queries, {stats.matches} matches, '
-        f'{stats.failures} failures, {stats.retries} retries, '
-        f'{stats.elapsed_seconds:.1f}s elapsed\n'
-    )
+    if not quiet:
+        if not stats.matches and not stats.failures:
+            status_stream.write(f'No results for your dork search{scope}. Hurray!\n')
+        status_stream.write(
+            f'Summary: {stats.queries} queries, {stats.matches} matches, '
+            f'{stats.failures} failures, {stats.retries} retries, '
+            f'{stats.elapsed_seconds:.1f}s elapsed\n'
+        )
     return stats

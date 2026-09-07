@@ -1,5 +1,6 @@
 import csv
 import io
+import json
 import sys
 import tempfile
 import types
@@ -107,10 +108,94 @@ class SearchTests(unittest.TestCase):
 
         self.assertEqual(client.query, 'filename:.env PASSWORD repo:owner/repo')
         self.assertEqual(len(rows), 2)
+        self.assertEqual(rows[0][0], 'Issue Type (Dork)')
         self.assertEqual(rows[1][0], client.query)
         self.assertEqual(rows[1][1], "['secret, with comma']")
         self.assertEqual(stats.matches, 1)
         self.assertEqual(stats.exit_code, 0)
+
+    def test_streams_json_document_to_stdout(self):
+        with tempfile.TemporaryDirectory() as directory:
+            dorks = Path(directory) / 'dorks.txt'
+            dorks.write_text('query\n', encoding='utf-8')
+            stdout = io.StringIO()
+            stderr = io.StringIO()
+            github_dork.search(
+                repo_to_search='owner/repo', gh_dorks_file=str(dorks),
+                output_format='json', client=GitHubClient(),
+                stdout=stdout, stderr=stderr, monotonic=lambda: 10,
+            )
+
+        document = json.loads(stdout.getvalue())
+        self.assertEqual(document['results'][0]['path'], SearchResult.path)
+        self.assertEqual(document['summary']['matches'], 1)
+        self.assertNotIn('Scanning', stdout.getvalue())
+        self.assertIn('Summary: 1 queries, 1 matches', stderr.getvalue())
+
+    def test_streams_typed_json_lines(self):
+        with tempfile.TemporaryDirectory() as directory:
+            dorks = Path(directory) / 'dorks.txt'
+            dorks.write_text('query\n', encoding='utf-8')
+            stdout = io.StringIO()
+            github_dork.search(
+                repo_to_search='owner/repo', gh_dorks_file=str(dorks),
+                output_format='jsonl', quiet=True, client=GitHubClient(),
+                stdout=stdout, stderr=io.StringIO(),
+            )
+
+        records = [json.loads(line) for line in stdout.getvalue().splitlines()]
+        self.assertEqual([record['type'] for record in records], ['result', 'summary'])
+        self.assertEqual(records[1]['matches'], 1)
+
+    def test_quiet_suppresses_status_but_not_text_results(self):
+        with tempfile.TemporaryDirectory() as directory:
+            dorks = Path(directory) / 'dorks.txt'
+            dorks.write_text('query\n', encoding='utf-8')
+            stdout = io.StringIO()
+            github_dork.search(
+                repo_to_search='owner/repo', gh_dorks_file=str(dorks),
+                quiet=True, client=GitHubClient(), stdout=stdout,
+            )
+
+        self.assertIn('Found result', stdout.getvalue())
+        self.assertNotIn('Scanning', stdout.getvalue())
+        self.assertNotIn('Summary', stdout.getvalue())
+
+    def test_refuses_to_overwrite_output_without_force(self):
+        with tempfile.TemporaryDirectory() as directory:
+            dorks = Path(directory) / 'dorks.txt'
+            output = Path(directory) / 'results.json'
+            dorks.write_text('query\n', encoding='utf-8')
+            output.write_text('keep me', encoding='utf-8')
+
+            with self.assertRaises(FileExistsError):
+                github_dork.search(
+                    repo_to_search='owner/repo', gh_dorks_file=str(dorks),
+                    output_filename=str(output), output_format='json',
+                    client=GitHubClient(),
+                )
+            self.assertEqual(output.read_text(encoding='utf-8'), 'keep me')
+
+            github_dork.search(
+                repo_to_search='owner/repo', gh_dorks_file=str(dorks),
+                output_filename=str(output), output_format='json', force=True,
+                quiet=True, client=GitHubClient(),
+            )
+            self.assertEqual(json.loads(output.read_text())['summary']['matches'], 1)
+
+    def test_output_failure_is_fatal(self):
+        class BrokenStream(io.StringIO):
+            def write(self, value):
+                raise OSError('disk full')
+
+        with tempfile.TemporaryDirectory() as directory:
+            dorks = Path(directory) / 'dorks.txt'
+            dorks.write_text('query\n', encoding='utf-8')
+            with self.assertRaisesRegex(OSError, 'disk full'):
+                github_dork.search(
+                    repo_to_search='owner/repo', gh_dorks_file=str(dorks),
+                    quiet=True, client=GitHubClient(), stdout=BrokenStream(),
+                )
 
     def test_reports_when_no_results_are_found(self):
         client = GitHubClient()
@@ -245,6 +330,18 @@ class SearchTests(unittest.TestCase):
 
 
 class CommandLineTests(unittest.TestCase):
+    def test_parses_output_controls(self):
+        arguments = [
+            '-r', 'owner/repo', '--format', 'json', '--output', 'results.json',
+            '--force', '--verbose',
+        ]
+        args = github_dork.build_parser().parse_args(arguments)
+
+        self.assertEqual(args.output_format, 'json')
+        self.assertEqual(args.output_filename, 'results.json')
+        self.assertTrue(args.force)
+        self.assertTrue(args.verbose)
+
     def test_version_comes_from_package_metadata(self):
         stdout = io.StringIO()
         with patch.object(sys, 'argv', ['github-dorks', '--version']):

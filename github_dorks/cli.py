@@ -60,8 +60,26 @@ def build_parser():
         help='GitHub dorks file. Eg: github-dorks.txt',
     )
     parser.add_argument(
-        '-o', '--outputFile', dest='output_filename',
-        help='CSV file to write results to. This overwrites the provided file.',
+        '-o', '--output', '--outputFile', dest='output_filename',
+        help='Write results to this file instead of stdout',
+    )
+    parser.add_argument(
+        '--format', choices=('text', 'csv', 'json', 'jsonl'),
+        dest='output_format',
+        help='Result format (default: text, or CSV when -o is used)',
+    )
+    parser.add_argument(
+        '-f', '--force', action='store_true',
+        help='Overwrite an existing output file',
+    )
+    detail_group = parser.add_mutually_exclusive_group()
+    detail_group.add_argument(
+        '-q', '--quiet', action='store_true',
+        help='Suppress progress and summary messages',
+    )
+    detail_group.add_argument(
+        '--verbose', action='store_true',
+        help='Report each query as it runs',
     )
     parser.add_argument(
         '--max-retries', type=int, default=3,
@@ -84,6 +102,10 @@ def main():
             user_to_search=args.user_to_search,
             gh_dorks_file=args.gh_dorks_file,
             output_filename=args.output_filename,
+            output_format=args.output_format,
+            force=args.force,
+            quiet=args.quiet,
+            verbose=args.verbose,
             client=create_client(),
             max_retries=args.max_retries,
         )
