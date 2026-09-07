@@ -15,6 +15,7 @@ authors = [
 dependencies = [
   "feedparser>=6.0.12,<7",
   "github3.py==4.0.1",
+  "requests>=2.18,<3",
 ]
 classifiers = [
   "Development Status :: 4 - Beta",
