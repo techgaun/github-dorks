@@ -62,6 +62,12 @@ GH_TOKEN=<github_token> github-dorks -u dev-nepal              # search using au
 GH_URL=https://github.example.com github-dorks -u dev-nepal    # search a GitHub Enterprise instance
 
 github-dorks -r techgaun/github-dorks --max-retries 5         # retry recoverable failures up to five times
+
+github-dorks -r techgaun/github-dorks --format json           # stream JSON to stdout
+
+github-dorks -u dev-nepal --format jsonl -o results.jsonl     # write newline-delimited JSON
+
+github-dorks -u dev-nepal --format csv -o results.csv --force # explicitly replace an existing file
 ```
 
 The legacy `python github-dork.py ...` invocation remains available for
@@ -71,6 +77,13 @@ Each scan ends with a summary of queries, matches, failures, retries, and
 elapsed time. The command exits with status `0` after a complete scan, `2` when
 one or more queries failed, and `1` for fatal configuration, file, or
 authentication errors.
+
+Supported result formats are `text`, `csv`, `json`, and `jsonl`. Text is the
+default for terminal output; using `-o/--output` without `--format` preserves
+the historical CSV default. Existing files are protected unless `--force` is
+provided. Use `--quiet` to suppress progress and summaries, or `--verbose` to
+print every query as it runs. Structured stdout remains machine-readable because
+status messages are sent to stderr.
 
 ### Development
 
