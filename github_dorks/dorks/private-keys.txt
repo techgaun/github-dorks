@@ -1,0 +1,8 @@
+# Cryptographic private keys and decryption keys
+extension:pem private
+extension:ppk private
+filename:id_rsa or filename:id_dsa
+filename:master.key path:config
+"-----BEGIN OPENSSH PRIVATE KEY-----"
+"-----BEGIN PRIVATE KEY-----"
+"AGE-SECRET-KEY-1"

@@ -4,12 +4,11 @@ import os
 import time
 from contextlib import nullcontext
 from dataclasses import dataclass
-from pathlib import Path
-from sys import prefix
-
 import github3 as github
 from requests import exceptions as requests_exceptions
 
+from github_dorks.dictionaries import find_dorks_file, iter_dorks  # noqa: F401
+from github_dorks.dictionaries import resolve_dictionaries
 from github_dorks.output import create_writer
 
 
@@ -37,21 +36,6 @@ def create_client(environ=None):
     if environ.get('GH_URL'):
         return github.GitHubEnterprise(url=environ['GH_URL'], **options)
     return github.GitHub(**options)
-
-
-def find_dorks_file(filename=None):
-    candidates = []
-    if filename:
-        candidates.append(Path(filename))
-    else:
-        candidates.extend([
-            Path('github-dorks.txt'),
-            Path(prefix) / 'github-dorks' / 'github-dorks.txt',
-        ])
-    for candidate in candidates:
-        if candidate.is_file():
-            return candidate
-    raise FileNotFoundError('the dorks file path is not valid')
 
 
 def _header_delay(error, now):
@@ -140,7 +124,7 @@ def _result_record(result, query):
 
 
 def search(repo_to_search=None, user_to_search=None, gh_dorks_file=None,
-           output_filename=None, output_format=None, force=False,
+           categories=None, output_filename=None, output_format=None, force=False,
            quiet=False, verbose=False, client=None, max_retries=3,
            sleep=time.sleep, now=time.time, monotonic=time.monotonic,
            stdout=None, stderr=None):
@@ -152,7 +136,7 @@ def search(repo_to_search=None, user_to_search=None, gh_dorks_file=None,
     if bool(repo_to_search) == bool(user_to_search):
         raise ValueError('exactly one repository or user scope is required')
     client = create_client() if client is None else client
-    dorks_path = find_dorks_file(gh_dorks_file)
+    dork_sources = resolve_dictionaries(gh_dorks_file, categories)
     output_format = output_format or ('csv' if output_filename else 'text')
     stats = ScanStats()
     started_at = monotonic()
@@ -167,14 +151,11 @@ def search(repo_to_search=None, user_to_search=None, gh_dorks_file=None,
             output_filename, 'w' if force else 'x', newline='', encoding='utf-8'
         ) if output_filename else nullcontext(stdout)
     )
-    with dorks_path.open(encoding='utf-8') as dork_file, output_context as output_file:
+    with output_context as output_file:
         writer = create_writer(output_format, output_file)
         writer.start()
         try:
-            for line in dork_file:
-                dork = line.strip()
-                if not dork or dork[0] in '#;':
-                    continue
+            for dork in iter_dorks(dork_sources):
                 query = dork + scope
                 stats.queries += 1
                 if verbose and not quiet:

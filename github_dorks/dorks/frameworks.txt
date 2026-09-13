@@ -1,0 +1,8 @@
+# Web framework and application configuration secrets
+filename:wp-config.php
+filename:.env DB_USERNAME NOT homestead
+filename:.env MAIL_HOST=smtp.gmail.com
+filename:prod.exs NOT prod.secret.exs
+filename:prod.secret.exs
+filename:settings.py SECRET_KEY
+filename:secrets.yml password

@@ -1,0 +1,34 @@
+# Operating system, shell, server, IDE, and client configuration secrets
+filename:.htpasswd
+filename:.bashrc password
+filename:.netrc password
+filename:_netrc password
+filename:filezilla.xml Pass
+filename:recentservers.xml Pass
+filename:idea14.key
+filename:config irc_pass
+filename:proftpdpasswd
+filename:ventrilo_srv.ini
+[WFClient] Password= extension:ica
+filename:server.cfg rcon password
+filename:.bash_history
+filename:.cshrc
+filename:.history
+filename:.sh_history
+filename:sshd_config
+filename:dhcpd.conf
+filename:shadow path:etc
+filename:passwd path:etc
+filename:sftp-config.json
+filename:.esmtprc password
+filename:logins.json
+filename:CCCam.cfg
+msg nickserv identify filename:config
+filename:.ftpconfig
+filename:.remote-sync.json
+filename:sftp.json path:.vscode
+filename:WebServers.xml
+filename:jupyter_notebook_config.json
+filename:github-recovery-codes.txt
+filename:gitlab-recovery-codes.txt
+filename:discord_backup_codes.txt

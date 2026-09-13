@@ -1,0 +1,16 @@
+# Database dumps, configuration, credentials, and connection strings
+extension:sql mysql dump
+extension:sql mysql dump password
+extension:json mongolab.com
+extension:yaml mongolab.com
+filename:robomongo.json
+filename:connections.xml
+filename:.pgpass
+filename:configuration.php JConfig password
+filename:config.php dbpasswd
+filename:config.php pass
+path:sites databases password
+filename:dbeaver-data-sources.xml
+.mlab.com password
+"mongodb+srv://" password
+"postgres://" password

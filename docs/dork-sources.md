@@ -1,9 +1,10 @@
 # Dork source references
 
-The primary `github-dorks.txt` dictionary favors documented token prefixes and
-canonical environment-variable names. Prefixes generally produce stronger
-signals; variable-name searches also catch providers that do not guarantee a
-stable public token format.
+The dictionaries in `github_dorks/dorks/` favor documented token prefixes and
+canonical environment-variable names. The generated `github-dorks.txt`
+aggregate contains every category for backward compatibility. Prefixes
+generally produce stronger signals; variable-name searches also catch providers
+that do not guarantee a stable public token format.
 
 These references support the modern credential families added to the
 dictionary. They are not exhaustive, and a match still requires manual review.

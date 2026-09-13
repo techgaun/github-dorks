@@ -1,6 +1,7 @@
 import csv
 import io
 import json
+import runpy
 import sys
 import tempfile
 import types
@@ -39,6 +40,7 @@ sys.modules.setdefault('github3', fake_github3)
 sys.modules.setdefault('feedparser', types.ModuleType('feedparser'))
 
 from github_dorks import __version__, cli as github_dork  # noqa: E402
+from github_dorks import dictionaries  # noqa: E402
 from github_dorks import search as search_module  # noqa: E402
 
 
@@ -197,6 +199,25 @@ class SearchTests(unittest.TestCase):
                     quiet=True, client=GitHubClient(), stdout=BrokenStream(),
                 )
 
+    def test_searches_selected_categories_only(self):
+        class RecordingClient:
+            def __init__(self):
+                self.queries = []
+
+            def search_code(self, query):
+                self.queries.append(query)
+                return iter([])
+
+        client = RecordingClient()
+        stats = github_dork.search(
+            repo_to_search='owner/repo', categories=['frameworks'],
+            quiet=True, client=client, stdout=io.StringIO(),
+        )
+
+        self.assertEqual(stats.queries, 7)
+        self.assertEqual(len(client.queries), 7)
+        self.assertTrue(all(query.endswith(' repo:owner/repo') for query in client.queries))
+
     def test_reports_when_no_results_are_found(self):
         client = GitHubClient()
         client.search_code = lambda query: iter([])
@@ -330,6 +351,18 @@ class SearchTests(unittest.TestCase):
 
 
 class CommandLineTests(unittest.TestCase):
+    def test_lists_categories_without_creating_client(self):
+        stdout = io.StringIO()
+        with patch.object(sys, 'argv', ['github-dorks', '--list-categories']):
+            with patch.object(github_dork, 'create_client') as create_client:
+                with redirect_stdout(stdout):
+                    self.assertEqual(github_dork.main(), 0)
+
+        create_client.assert_not_called()
+        self.assertEqual(
+            stdout.getvalue().splitlines(), list(dictionaries.available_categories())
+        )
+
     def test_parses_output_controls(self):
         arguments = [
             '-r', 'owner/repo', '--format', 'json', '--output', 'results.json',
@@ -402,6 +435,25 @@ class DorkDictionaryTests(unittest.TestCase):
         ):
             with self.subTest(marker=marker):
                 self.assertIn(marker, dictionary)
+
+    def test_aggregate_matches_categorized_dictionaries(self):
+        category_dorks = list(dictionaries.iter_dorks(
+            dictionaries.category_files().values()
+        ))
+        self.assertEqual(set(self.dorks), set(category_dorks))
+        self.assertEqual(len(self.dorks), len(category_dorks))
+
+    def test_generated_aggregate_is_current(self):
+        aggregate = Path(__file__).parents[1] / 'github-dorks.txt'
+        script = Path(__file__).parents[1] / 'scripts' / 'build-dorks.py'
+        with tempfile.TemporaryDirectory() as directory:
+            generated = Path(directory) / 'github-dorks.txt'
+            runpy.run_path(str(script))['build'](output=generated)
+
+            self.assertEqual(
+                aggregate.read_text(encoding='utf-8'),
+                generated.read_text(encoding='utf-8'),
+            )
 
 
 if __name__ == '__main__':

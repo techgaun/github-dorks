@@ -1,0 +1,21 @@
+# Cloud provider, infrastructure, observability, and deployment credentials
+filename:credentials aws_access_key_id
+filename:.s3cfg
+filename:.bash_profile aws
+rds.amazonaws.com password
+extension:json googleusercontent client_secret
+extension:yaml cloud.redislabs.com
+extension:json cloud.redislabs.com
+DATADOG_API_KEY language:shell
+"CLOUDFLARE_API_TOKEN" path:.env
+"DIGITALOCEAN_ACCESS_TOKEN" path:.env
+"dop_v1_"
+"PULUMI_ACCESS_TOKEN" path:.env
+"TFE_TOKEN" path:.env
+"atlasv1" filename:credentials.tfrc.json
+"VERCEL_TOKEN" path:.env
+"SUPABASE_SERVICE_ROLE_KEY" path:.env
+"SENTRY_AUTH_TOKEN" path:.env
+"sntrys_"
+filename:service-account.json "private_key_id" "private_key"
+"GOOGLE_PRIVATE_KEY" path:.env
