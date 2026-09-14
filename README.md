@@ -68,6 +68,10 @@ github-dorks -r techgaun/github-dorks --format json           # stream JSON to s
 github-dorks -u dev-nepal --format jsonl -o results.jsonl     # write newline-delimited JSON
 
 github-dorks -u dev-nepal --format csv -o results.csv --force # explicitly replace an existing file
+
+github-dorks --list-categories                                # list bundled dictionaries
+
+github-dorks -r techgaun/github-dorks -c cloud -c devops      # scan selected categories
 ```
 
 The legacy `python github-dork.py ...` invocation remains available for
@@ -85,6 +89,13 @@ provided. Use `--quiet` to suppress progress and summaries, or `--verbose` to
 print every query as it runs. Structured stdout remains machine-readable because
 status messages are sent to stderr.
 
+The bundled dictionary is split into `ai`, `cloud`, `databases`, `devops`,
+`frameworks`, `identity`, `observability`, `private-keys`, `saas`, and `system`
+categories. Repeat `-c/--category` to combine categories. With no category or
+custom `--dork` file, the command uses the backward-compatible
+`github-dorks.txt` aggregate. That aggregate is generated from the category
+files with `python scripts/build-dorks.py`.
+
 ### Development
 
 Run the dependency-free unit test suite with:
@@ -99,17 +110,20 @@ The CI test matrix covers Python 3.10 through 3.13.
 
 - Authenticated requests receive higher rate limits. Searches may pause until
   GitHub resets the search limit.
-- Search results can be printed to the terminal or written as CSV.
+- Large category combinations can take time because GitHub applies a separate
+  search rate limit.
 
 ### Contribution
 
-Please consider contributing dorks that can reveal potentially sensitive information on Github.
+Please consider contributing dorks that can reveal potentially sensitive information on GitHub.
 Documented sources for newer credential families are maintained in
 [docs/dork-sources.md](docs/dork-sources.md).
 
 ### List of Dorks
 
-The canonical, categorized dictionary is [github-dorks.txt](github-dorks.txt).
+The canonical dictionaries are the [categorized files](github_dorks/dorks).
+The generated [github-dorks.txt](github-dorks.txt) file contains every category
+for backward compatibility.
 The table below provides descriptions for many established patterns; newer
 credential families and their vendor references are tracked in
 [docs/dork-sources.md](docs/dork-sources.md). Many dorks can be modified to make

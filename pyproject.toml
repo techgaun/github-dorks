@@ -42,3 +42,6 @@ version = { attr = "github_dorks.__version__" }
 
 [tool.setuptools.data-files]
 github-dorks = ["github-dorks.txt"]
+
+[tool.setuptools.package-data]
+github_dorks = ["dorks/*.txt"]

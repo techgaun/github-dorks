@@ -1,0 +1,24 @@
+# Database dumps, configuration, credentials, and connection strings
+extension:sql mysql dump
+extension:sql mysql dump password
+extension:json mongolab.com
+extension:yaml mongolab.com
+filename:robomongo.json
+filename:connections.xml
+filename:.pgpass
+filename:configuration.php JConfig password
+filename:config.php dbpasswd
+filename:config.php pass
+path:sites databases password
+filename:dbeaver-data-sources.xml
+.mlab.com password
+"mongodb+srv://" password
+"postgres://" password
+"NEON_API_KEY" path:.env
+"PLANETSCALE_SERVICE_TOKEN" path:.env
+"UPSTASH_REDIS_REST_TOKEN" path:.env
+"UPSTASH_VECTOR_REST_TOKEN" path:.env
+"COCKROACH_API_KEY" path:.env
+"MONGODB_ATLAS_PRIVATE_KEY" path:.env
+"CLICKHOUSE_PASSWORD" path:.env
+"DATABRICKS_TOKEN" path:.env

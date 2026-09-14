@@ -1,0 +1,31 @@
+# Source control, CI/CD, and package registry credentials
+filename:.npmrc _auth
+filename:.dockercfg auth
+filename:.git-credentials
+filename:.tugboat NOT _tugboat
+HEROKU_API_KEY language:shell
+HEROKU_API_KEY language:json
+filename:hub oauth_token
+filename:config.json auths
+filename:express.conf path:.openshift
+JEKYLL_GITHUB_TOKEN
+HOMEBREW_GITHUB_API_TOKEN language:shell
+filename:deployment-config.json
+"github_pat_"
+"ghp_"
+"gho_" OR "ghu_" OR "ghs_" OR "ghr_"
+"glpat-"
+"gloas-" OR "gldt-"
+"glrt-" OR "glrtr-" OR "glcbt-" OR "glptt-"
+filename:.npmrc "_authToken="
+"pypi-" filename:.pypirc
+"NUGET_API_KEY" path:.env
+"GEM_HOST_API_KEY" path:.env
+"CIRCLE_TOKEN" path:.env
+"BUILDKITE_AGENT_TOKEN" path:.env
+"AZURE_DEVOPS_EXT_PAT" path:.env
+"BITBUCKET_APP_PASSWORD" path:.env
+filename:config path:.kube "client-key-data"
+filename:kubeconfig "client-key-data"
+filename:credentials.tfrc.json "token"
+filename:.terraformrc "credentials"

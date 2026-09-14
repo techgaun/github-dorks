@@ -1,0 +1,11 @@
+# Authentication, identity, and secrets-management credentials
+"AUTH0_CLIENT_SECRET" path:.env
+"CLERK_SECRET_KEY" path:.env
+"WORKOS_API_KEY" path:.env
+"OKTA_API_TOKEN" path:.env
+"STYTCH_SECRET" path:.env
+"OP_SERVICE_ACCOUNT_TOKEN" path:.env
+"OP_CONNECT_TOKEN" path:.env
+"VAULT_TOKEN" path:.env
+"DOPPLER_TOKEN" path:.env
+"INFISICAL_TOKEN" path:.env

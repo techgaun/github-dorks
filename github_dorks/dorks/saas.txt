@@ -1,0 +1,24 @@
+# SaaS, AI, payment, and communications credentials
+PT_TOKEN language:bash
+filename:.bashrc mailchimp
+extension:json api.forecast.io
+jsforce extension:js conn.login
+SF_USERNAME salesforce
+shodan_api_key language:python
+shodan_api_key language:shell
+shodan_api_key language:json
+shodan_api_key language:ruby
+extension:avastlic "support.avast.com"
+xoxp OR xoxb
+"api_hash" "api_id"
+"https://hooks.slack.com/services/"
+"OPENAI_API_KEY" path:.env
+"ANTHROPIC_API_KEY" path:.env
+"sk-ant-"
+"HF_TOKEN" path:.env
+"hf_" filename:token path:huggingface
+"sk_live_" OR "rk_live_"
+"SENDGRID_API_KEY" path:.env
+"TWILIO_AUTH_TOKEN" path:.env
+"SLACK_BOT_TOKEN" path:.env
+"DISCORD_BOT_TOKEN" path:.env

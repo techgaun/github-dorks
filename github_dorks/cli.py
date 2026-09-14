@@ -9,10 +9,11 @@ import feedparser
 import github3 as github
 
 from github_dorks import __version__
+from github_dorks.dictionaries import available_categories
 from github_dorks.search import create_client, search
 
 
-def monitor(gh_dorks_file=None, feed_token=None, refresh_time=60):
+def monitor(gh_dorks_file=None, feed_token=None, refresh_time=60, categories=None):
     github_user = os.getenv('GH_USER')
     if github_user is None:
         raise ValueError('GH_USER is required for monitoring')
@@ -27,6 +28,7 @@ def monitor(gh_dorks_file=None, feed_token=None, refresh_time=60):
                 search(
                     user_to_search=item['author_detail']['name'],
                     gh_dorks_file=gh_dorks_file,
+                    categories=categories,
                 )
                 seen_items.add(item['title'])
         print('Waiting for new items...')
@@ -55,9 +57,19 @@ def build_parser():
         '-m', '--monit', dest='active_monit',
         help='Monitor the GitHub user private feed with this feed token',
     )
-    parser.add_argument(
+    group.add_argument(
+        '--list-categories', action='store_true',
+        help='List bundled dictionary categories and exit',
+    )
+    dictionary_group = parser.add_mutually_exclusive_group()
+    dictionary_group.add_argument(
         '-d', '--dork', dest='gh_dorks_file',
         help='GitHub dorks file. Eg: github-dorks.txt',
+    )
+    dictionary_group.add_argument(
+        '-c', '--category', action='append', dest='categories',
+        choices=available_categories(),
+        help='Bundled category to scan; repeat to select multiple',
     )
     parser.add_argument(
         '-o', '--output', '--outputFile', dest='output_filename',
@@ -91,16 +103,23 @@ def build_parser():
 def main():
     parser = build_parser()
     args = parser.parse_args()
+    if args.list_categories:
+        print('\n'.join(available_categories()))
+        return 0
     if args.max_retries < 0:
         parser.error('--max-retries must be zero or greater')
     try:
         if args.active_monit:
-            monitor(args.gh_dorks_file, args.active_monit)
+            monitor(
+                args.gh_dorks_file, args.active_monit,
+                categories=args.categories,
+            )
             return 0
         stats = search(
             repo_to_search=args.repo_to_search,
             user_to_search=args.user_to_search,
             gh_dorks_file=args.gh_dorks_file,
+            categories=args.categories,
             output_filename=args.output_filename,
             output_format=args.output_format,
             force=args.force,
