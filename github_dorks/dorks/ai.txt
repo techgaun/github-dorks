@@ -1,0 +1,15 @@
+# AI model providers, inference platforms, and vector services
+"GROQ_API_KEY" path:.env
+"MISTRAL_API_KEY" path:.env
+"COHERE_API_KEY" path:.env
+"GEMINI_API_KEY" path:.env
+"REPLICATE_API_TOKEN" path:.env
+"TOGETHER_API_KEY" path:.env
+"OPENROUTER_API_KEY" path:.env
+"PPLX_API_KEY" path:.env
+"PINECONE_API_KEY" path:.env
+"WEAVIATE_API_KEY" path:.env
+"QDRANT_API_KEY" path:.env
+"LANGCHAIN_API_KEY" path:.env
+"MODAL_TOKEN_SECRET" path:.env
+"FAL_KEY" path:.env

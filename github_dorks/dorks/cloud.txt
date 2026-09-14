@@ -19,3 +19,8 @@ DATADOG_API_KEY language:shell
 "sntrys_"
 filename:service-account.json "private_key_id" "private_key"
 "GOOGLE_PRIVATE_KEY" path:.env
+"NETLIFY_AUTH_TOKEN" path:.env
+"RAILWAY_TOKEN" path:.env
+"RENDER_API_KEY" path:.env
+"FLY_API_TOKEN" path:.env
+"FIREBASE_TOKEN" path:.env

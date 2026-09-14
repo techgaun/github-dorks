@@ -14,3 +14,11 @@ filename:dbeaver-data-sources.xml
 .mlab.com password
 "mongodb+srv://" password
 "postgres://" password
+"NEON_API_KEY" path:.env
+"PLANETSCALE_SERVICE_TOKEN" path:.env
+"UPSTASH_REDIS_REST_TOKEN" path:.env
+"UPSTASH_VECTOR_REST_TOKEN" path:.env
+"COCKROACH_API_KEY" path:.env
+"MONGODB_ATLAS_PRIVATE_KEY" path:.env
+"CLICKHOUSE_PASSWORD" path:.env
+"DATABRICKS_TOKEN" path:.env

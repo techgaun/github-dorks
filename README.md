@@ -89,12 +89,12 @@ provided. Use `--quiet` to suppress progress and summaries, or `--verbose` to
 print every query as it runs. Structured stdout remains machine-readable because
 status messages are sent to stderr.
 
-The bundled dictionary is split into `cloud`, `databases`, `devops`,
-`frameworks`, `private-keys`, `saas`, and `system` categories. Repeat
-`-c/--category` to combine categories. With no category or custom `--dork`
-file, the command uses the backward-compatible `github-dorks.txt` aggregate.
-That aggregate is generated from the category files with
-`python scripts/build-dorks.py`.
+The bundled dictionary is split into `ai`, `cloud`, `databases`, `devops`,
+`frameworks`, `identity`, `observability`, `private-keys`, `saas`, and `system`
+categories. Repeat `-c/--category` to combine categories. With no category or
+custom `--dork` file, the command uses the backward-compatible
+`github-dorks.txt` aggregate. That aggregate is generated from the category
+files with `python scripts/build-dorks.py`.
 
 ### Development
 
