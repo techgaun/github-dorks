@@ -1,0 +1,12 @@
+# Monitoring, telemetry, incident-response, and code-quality credentials
+"NEW_RELIC_LICENSE_KEY" path:.env
+"NEW_RELIC_API_KEY" path:.env
+"GRAFANA_API_KEY" path:.env
+"HONEYCOMB_API_KEY" path:.env
+"SPLUNK_HEC_TOKEN" path:.env
+"DT_API_TOKEN" path:.env
+"PAGERDUTY_API_TOKEN" path:.env
+"OPSGENIE_API_KEY" path:.env
+"SNYK_TOKEN" path:.env
+"SONAR_TOKEN" path:.env
+"CODECOV_TOKEN" path:.env

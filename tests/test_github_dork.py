@@ -431,10 +431,19 @@ class DorkDictionaryTests(unittest.TestCase):
         for marker in (
             'github_pat_', 'glpat-', 'pypi-', 'OPENAI_API_KEY',
             'ANTHROPIC_API_KEY', 'HF_TOKEN', 'CLOUDFLARE_API_TOKEN',
-            'SUPABASE_SERVICE_ROLE_KEY', 'sk_live_',
+            'SUPABASE_SERVICE_ROLE_KEY', 'sk_live_', 'GROQ_API_KEY',
+            'PINECONE_API_KEY', 'UPSTASH_REDIS_REST_TOKEN',
+            'OP_SERVICE_ACCOUNT_TOKEN', 'CLERK_SECRET_KEY',
+            'NEW_RELIC_LICENSE_KEY', 'PAGERDUTY_API_TOKEN',
         ):
             with self.subTest(marker=marker):
                 self.assertIn(marker, dictionary)
+
+    def test_contains_focused_modern_categories(self):
+        categories = dictionaries.available_categories()
+        for category in ('ai', 'identity', 'observability'):
+            with self.subTest(category=category):
+                self.assertIn(category, categories)
 
     def test_aggregate_matches_categorized_dictionaries(self):
         category_dorks = list(dictionaries.iter_dorks(
