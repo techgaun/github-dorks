@@ -72,6 +72,10 @@ github-dorks -u dev-nepal --format csv -o results.csv --force # explicitly repla
 github-dorks --list-categories                                # list bundled dictionaries
 
 github-dorks -r techgaun/github-dorks -c cloud -c devops      # scan selected categories
+
+github-dorks --local ./cloned-repo -c ai -c identity          # scan a local working tree
+
+github-dorks --local . --format jsonl -o local-results.jsonl  # save offline results
 ```
 
 The legacy `python github-dork.py ...` invocation remains available for
@@ -81,6 +85,14 @@ Each scan ends with a summary of queries, matches, failures, retries, and
 elapsed time. The command exits with status `0` after a complete scan, `2` when
 one or more queries failed, and `1` for fatal configuration, file, or
 authentication errors.
+
+Local scans do not require GitHub credentials or network access. In a Git
+working tree, the scanner checks tracked files and non-ignored untracked files;
+elsewhere it recursively checks files while excluding `.git`. It supports the
+dictionary syntax used by this project, including quoted text, `OR`, `NOT`, and
+the `filename:`, `path:`, `extension:`, and common `language:` qualifiers.
+Binary files and files larger than 1 MB are skipped by default. Override that
+limit in bytes with `--max-file-size`.
 
 Supported result formats are `text`, `csv`, `json`, and `jsonl`. Text is the
 default for terminal output; using `-o/--output` without `--format` preserves
@@ -112,6 +124,8 @@ The CI test matrix covers Python 3.10 through 3.13.
   GitHub resets the search limit.
 - Large category combinations can take time because GitHub applies a separate
   search rate limit.
+- Offline scanning inspects the current working tree only; Git history scanning
+  is not yet supported.
 
 ### Contribution
 
