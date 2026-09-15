@@ -10,6 +10,7 @@ import github3 as github
 
 from github_dorks import __version__
 from github_dorks.dictionaries import available_categories
+from github_dorks.local import scan_local
 from github_dorks.search import create_client, search
 
 
@@ -38,7 +39,7 @@ def monitor(gh_dorks_file=None, feed_token=None, refresh_time=60, categories=Non
 def build_parser():
     parser = argparse.ArgumentParser(
         prog='github-dorks',
-        description='Search GitHub for sensitive data patterns',
+        description='Search GitHub or local source trees for sensitive data patterns',
         epilog='Use responsibly. Only scan repositories you are authorized to assess.',
     )
     parser.add_argument(
@@ -52,6 +53,10 @@ def build_parser():
     group.add_argument(
         '-r', '--repo', dest='repo_to_search',
         help='GitHub repo to search within. Eg: techgaun/github-dorks',
+    )
+    group.add_argument(
+        '-l', '--local', dest='local_path',
+        help='Scan a local repository or file without using the GitHub API',
     )
     group.add_argument(
         '-m', '--monit', dest='active_monit',
@@ -97,6 +102,10 @@ def build_parser():
         '--max-retries', type=int, default=3,
         help='Maximum retries per query for recoverable API failures (default: 3)',
     )
+    parser.add_argument(
+        '--max-file-size', type=int, default=1_000_000,
+        help='Largest local file to scan in bytes (default: 1000000)',
+    )
     return parser
 
 
@@ -108,6 +117,8 @@ def main():
         return 0
     if args.max_retries < 0:
         parser.error('--max-retries must be zero or greater')
+    if args.max_file_size <= 0:
+        parser.error('--max-file-size must be greater than zero')
     try:
         if args.active_monit:
             monitor(
@@ -115,6 +126,19 @@ def main():
                 categories=args.categories,
             )
             return 0
+        if args.local_path:
+            stats = scan_local(
+                args.local_path,
+                gh_dorks_file=args.gh_dorks_file,
+                categories=args.categories,
+                output_filename=args.output_filename,
+                output_format=args.output_format,
+                force=args.force,
+                quiet=args.quiet,
+                verbose=args.verbose,
+                max_file_size=args.max_file_size,
+            )
+            return stats.exit_code
         stats = search(
             repo_to_search=args.repo_to_search,
             user_to_search=args.user_to_search,

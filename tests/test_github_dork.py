@@ -41,6 +41,7 @@ sys.modules.setdefault('feedparser', types.ModuleType('feedparser'))
 
 from github_dorks import __version__, cli as github_dork  # noqa: E402
 from github_dorks import dictionaries  # noqa: E402
+from github_dorks import local as local_module  # noqa: E402
 from github_dorks import search as search_module  # noqa: E402
 
 
@@ -375,6 +376,15 @@ class CommandLineTests(unittest.TestCase):
         self.assertTrue(args.force)
         self.assertTrue(args.verbose)
 
+    def test_local_scan_does_not_create_github_client(self):
+        stats = search_module.ScanStats(matches=1)
+        with patch.object(sys, 'argv', ['github-dorks', '--local', '.']):
+            with patch.object(github_dork, 'create_client') as create_client:
+                with patch.object(github_dork, 'scan_local', return_value=stats):
+                    self.assertEqual(github_dork.main(), 0)
+
+        create_client.assert_not_called()
+
     def test_version_comes_from_package_metadata(self):
         stdout = io.StringIO()
         with patch.object(sys, 'argv', ['github-dorks', '--version']):
@@ -402,6 +412,83 @@ class CommandLineTests(unittest.TestCase):
                     self.assertEqual(github_dork.main(), 1)
 
         self.assertIn('the dorks file path is not valid', stderr.getvalue())
+
+
+class LocalScanTests(unittest.TestCase):
+    def test_parses_qualifiers_or_and_not(self):
+        query = local_module.parse_query(
+            'filename:id_rsa OR filename:id_dsa private NOT example'
+        )
+
+        self.assertTrue(query.matches(
+            Path('id_rsa'), 'keys/id_rsa', 'a private credential'
+        ))
+        self.assertTrue(query.matches(
+            Path('id_dsa'), 'keys/id_dsa', 'a private credential'
+        ))
+        self.assertFalse(query.matches(
+            Path('id_rsa'), 'keys/id_rsa', 'a private example credential'
+        ))
+
+    def test_scans_local_text_files_and_streams_json(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            environment = root / '.env'
+            environment.write_text(
+                'GROQ_API_KEY=gsk_live_secret\nSAFE=value\n', encoding='utf-8'
+            )
+            (root / 'binary.bin').write_bytes(b'GROQ_API_KEY\0secret')
+            dorks = root / 'dorks.txt'
+            dorks.write_text(
+                'filename:.env "GROQ_API_KEY"\n'
+                'filename:.env NOT "GROQ_API_KEY"\n',
+                encoding='utf-8',
+            )
+            stdout = io.StringIO()
+            stats = local_module.scan_local(
+                root, gh_dorks_file=dorks, output_format='json', quiet=True,
+                stdout=stdout,
+            )
+
+        document = json.loads(stdout.getvalue())
+        self.assertEqual(stats.queries, 2)
+        self.assertEqual(stats.matches, 1)
+        self.assertEqual(stats.files, 2)
+        self.assertEqual(document['summary']['files'], 2)
+        self.assertEqual(document['results'][0]['path'], '.env')
+        self.assertIn('1: GROQ_API_KEY=', document['results'][0]['text_matches'][0])
+
+    def test_skips_oversized_files(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'secret.txt').write_text('SECRET_TOKEN', encoding='utf-8')
+            dorks = root / 'dorks.txt'
+            dorks.write_text('SECRET_TOKEN\n', encoding='utf-8')
+            stats = local_module.scan_local(
+                root, gh_dorks_file=dorks, max_file_size=5, quiet=True,
+                stdout=io.StringIO(),
+            )
+
+        self.assertEqual(stats.matches, 0)
+
+    def test_does_not_scan_its_own_output_file(self):
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            root = base / 'source'
+            root.mkdir()
+            dorks = base / 'dorks.txt'
+            dorks.write_text('SECRET_TOKEN\n', encoding='utf-8')
+            output = root / 'SECRET_TOKEN-results.json'
+            stats = local_module.scan_local(
+                root, gh_dorks_file=dorks, output_filename=output,
+                output_format='json', quiet=True,
+            )
+
+        self.assertEqual(stats.matches, 0)
+
+    def test_rejects_missing_local_path(self):
+        with self.assertRaisesRegex(ValueError, 'local scan path'):
+            list(local_module.iter_local_files('/does/not/exist'))
 
 
 class DorkDictionaryTests(unittest.TestCase):
